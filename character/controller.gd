@@ -13,10 +13,11 @@ var command_queue = []
 var state = STATE.IDLE
 var new_command = false
 var destination = Vector3(0,0,0)
+var traits = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	traits = get_parent().get_node("traits")
 
 func process_move_command(in_command, delta):
 	state = STATE.MOVE
@@ -72,9 +73,12 @@ func _physics_process(delta):
 	if state == STATE.MOVE:
 		var current_location = get_parent().global_transform.origin
 		var next_location = get_parent().nav.get_next_location()
-		var new_velocity = (next_location - current_location).normalized()*20
+		var dir = (next_location - current_location)
+		var distance = dir.length()
+		var new_velocity = dir.normalized()*20
 		#get_parent().set_linear_velocity(new_velocity)
 		get_parent().move_and_slide(new_velocity)
+		traits.add_energy(-distance*traits.get_movement_energy()*delta)
 
 func queue_command(in_command):
 	command_queue.append(in_command)
