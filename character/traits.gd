@@ -23,7 +23,7 @@ func get_size():
 	
 func add_energy(delta):
 	energy += delta/stamina
-	energy = max(min(energy, stamina), 0)
+	energy = max(min(energy, 1.0), 0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
