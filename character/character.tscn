@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://character/controller.gd" type="Script" id=1]
 [ext_resource path="res://character/character.gd" type="Script" id=2]
@@ -8,10 +8,41 @@
 [ext_resource path="res://character/energy_bar.gd" type="Script" id=6]
 [ext_resource path="res://character/cooldown_bar.gd" type="Script" id=7]
 [ext_resource path="res://character/health_bar.gd" type="Script" id=8]
+[ext_resource path="res://character/character.gdshader" type="Shader" id=9]
 
 [sub_resource type="CapsuleMesh" id=3]
 
+[sub_resource type="Shader" id=16]
+code = "shader_type canvas_item;
+
+uniform int pixelSize = 4;
+
+void fragment()
+{
+	
+	ivec2 size = textureSize(TEXTURE, 0);
+	
+	int xRes = size.x;
+	int yRes = size.y;
+	
+	float xFactor = float(xRes) / float(pixelSize);
+	float yFactor = float(yRes) / float(pixelSize);
+	
+	float grid_uv_x = round(UV.x * xFactor) / xFactor;
+	float grid_uv_y = round(UV.y * yFactor) / yFactor;
+	
+	vec4 text = texture(TEXTURE, vec2(grid_uv_x, grid_uv_y));
+	
+	COLOR = text;
+}"
+
+[sub_resource type="ShaderMaterial" id=17]
+shader = SubResource( 16 )
+shader_param/pixelSize = 4
+
 [sub_resource type="ShaderMaterial" id=19]
+next_pass = SubResource( 17 )
+shader = ExtResource( 9 )
 
 [sub_resource type="Shader" id=20]
 code = "shader_type canvas_item;

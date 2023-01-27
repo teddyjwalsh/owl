@@ -14,9 +14,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var energy = get_parent().get_node("traits").energy
-	var screen_pos = get_viewport().get_camera().unproject_position(get_parent().global_transform.origin)
-	set_global_position(screen_pos + Vector2(-max_width/2, -70))
-	color = Color(0.2,0.5,0.2)
-	rect_size = Vector2(max_width*energy, height)
+	if get_viewport().get_camera() != null:
+		var energy = get_parent().get_node("traits").energy
+		var screen_pos = get_viewport().get_camera().unproject_position(get_parent().global_transform.origin)
+		set_global_position(screen_pos + Vector2(-max_width/2, -70))
+		color = Color(0.2,0.5,0.2)
+		rect_size = Vector2(max_width*energy, height)
   

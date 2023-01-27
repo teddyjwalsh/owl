@@ -21,12 +21,17 @@ _global_script_class_icons={
 [application]
 
 config/name="strategy_game"
-run/main_scene="res://map/map.tscn"
+run/main_scene="res://demo/demo.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 HumanInput="*res://human_input/human_input.tscn"
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/shrink=1.5
 
 [gui]
 
@@ -38,6 +43,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-quality/filters/sharpen_intensity=0.458
-quality/filters/use_fxaa=true
+quality/filters/anisotropic_filter_level=1
 environment/default_environment="res://default_env.tres"

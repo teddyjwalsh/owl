@@ -23,6 +23,8 @@ func click(in_node):
 	
 # cast a ray from camera at mouse position, and get the object colliding with the ray
 func get_object_under_mouse():
+	if get_viewport().get_camera() == null:
+		return null
 	var mouse_pos = get_viewport().get_mouse_position()
 	var ray_from = get_viewport().get_camera().project_ray_origin(mouse_pos)
 	var ray_to = ray_from + get_viewport().get_camera().project_ray_normal(mouse_pos) * RAY_LENGTH
@@ -34,8 +36,10 @@ func get_object_under_mouse():
 func _input(event):
 	if event is InputEventMouseMotion:
 		var res = get_object_under_mouse()
-		if res["collider"].get_class() == "character":
-			hovered_unit = res["collider"]		
+		if res != null:
+			if "collider" in res:
+				if res["collider"].get_class() == "character":
+					hovered_unit = res["collider"]		
 	if event is InputEventMouseButton:
 		var shift = Input.is_key_pressed(KEY_SHIFT)
 		if event.button_index == 1 and !event.is_pressed():
