@@ -21,9 +21,10 @@ void fragment()
 	float l = length(vtx);
 	float radial_proximity = (l - (ring_end + ring_start)/2.0)/(radial_width/2.0);
 	radial_proximity = 1.0 - pow(radial_proximity,2);
-	if (l < 1.0 && l > 0.75)
+	float val = texture(noise, vec2(UV.x*radial_proximity, UV.y*sin(TIME))).x*1.0*radial_proximity;
+	if (val > 0.3)
 	{
-		ALPHA = texture(noise, vec2(UV.x*radial_proximity, UV.y*sin(TIME))).x*1.0*radial_proximity;	
+		ALPHA = 1.0
 	}
 	else
 	{

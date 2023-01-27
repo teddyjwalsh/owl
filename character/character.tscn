@@ -1,64 +1,52 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://character/controller.gd" type="Script" id=1]
 [ext_resource path="res://character/character.gd" type="Script" id=2]
+[ext_resource path="res://character/highlight.gdshader" type="Shader" id=3]
+[ext_resource path="res://character/inventory.gd" type="Script" id=4]
 [ext_resource path="res://character/traits.gd" type="Script" id=5]
 [ext_resource path="res://character/energy_bar.gd" type="Script" id=6]
+[ext_resource path="res://character/cooldown_bar.gd" type="Script" id=7]
+[ext_resource path="res://character/health_bar.gd" type="Script" id=8]
 
 [sub_resource type="CapsuleMesh" id=3]
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=19]
 
-[sub_resource type="CapsuleShape" id=4]
-
-[sub_resource type="PlaneMesh" id=7]
-
-[sub_resource type="Shader" id=8]
-code = "
-
-shader_type spatial;
-
-uniform sampler2D noise;
-uniform float angle = -0.3;
-uniform float position = -0.2;
-uniform float spread : hint_range(0.0, 1.0) = 0.5;
-
-varying vec3 vtx;
-
-void vertex() {
-  vtx = VERTEX;
-}
+[sub_resource type="Shader" id=20]
+code = "shader_type canvas_item;
 
 void fragment()
 {
-	float ring_start = 0.75;
-	float ring_end = 1.0;
-	float radial_width = ring_end - ring_start;
-	float l = length(vtx);
-	float radial_proximity = (l - (ring_end + ring_start)/2.0)/(radial_width/2.0);
-	radial_proximity = 1.0 - pow(radial_proximity,2);
-	if (l < 1.0 && l > 0.75)
+	/*
+	if (UV.x < 0.1)
 	{
-		ALPHA = texture(noise, vec2(UV.x*radial_proximity, UV.y*sin(TIME))).x*1.0*radial_proximity;	
+		COLOR = vec4(1.0,1.0,1.0,1.0);
 	}
 	else
 	{
-		ALPHA = 0.0;
+		COLOR = vec4(1.0,0.0,0.0,1.0);
 	}
-	vec3 out_col = vec3(0.3,1.0,0.4);
-	ALBEDO = texture(noise, vec2(UV.x*radial_proximity, UV.y*TIME/1999.0)).x*out_col;
-	EMISSION = out_col;
-	
+	*/
+	COLOR = vec4(1.0,1.0,1.0,1.0);
 }"
 
-[sub_resource type="OpenSimplexNoise" id=10]
-period = 216.9
+[sub_resource type="ShaderMaterial" id=21]
+shader = SubResource( 20 )
+
+[sub_resource type="CapsuleShape" id=4]
+
+[sub_resource type="PlaneMesh" id=13]
+
+[sub_resource type="OpenSimplexNoise" id=14]
+period = 60.0
+persistence = 0.503
 
 [sub_resource type="NoiseTexture" id=11]
-noise = SubResource( 10 )
+noise = SubResource( 14 )
 
-[sub_resource type="ShaderMaterial" id=9]
-shader = SubResource( 8 )
+[sub_resource type="ShaderMaterial" id=15]
+shader = ExtResource( 3 )
 shader_param/angle = -0.3
 shader_param/position = -0.2
 shader_param/spread = 0.5
@@ -74,11 +62,12 @@ script = ExtResource( 1 )
 script = ExtResource( 5 )
 
 [node name="inventory" type="Node" parent="."]
+script = ExtResource( 4 )
 
 [node name="character_model" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.5, 0 )
 mesh = SubResource( 3 )
-material/0 = SubResource( 6 )
+material/0 = SubResource( 19 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 
@@ -87,11 +76,24 @@ margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 6 )
 
+[node name="health_bar" type="ColorRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 8 )
+
+[node name="cooldown_bar" type="ColorRect" parent="."]
+material = SubResource( 21 )
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 7 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.5, 0 )
 shape = SubResource( 4 )
 
 [node name="highlight" type="MeshInstance" parent="."]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.0608883, 0 )
-mesh = SubResource( 7 )
-material/0 = SubResource( 9 )
+mesh = SubResource( 13 )
+material/0 = SubResource( 15 )
+
+[node name="env_sensor" type="Node" parent="."]

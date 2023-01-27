@@ -7,9 +7,11 @@ extends Spatial
 
 var last_clicked = null
 var RAY_LENGTH = 400
+var hovered_unit = null
 
 signal clicked_char(chr)
 signal right_clicked(pos, queue)
+signal unit_right_clicked(target, queue)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,6 +32,10 @@ func get_object_under_mouse():
 	
 	
 func _input(event):
+	if event is InputEventMouseMotion:
+		var res = get_object_under_mouse()
+		if res["collider"].get_class() == "character":
+			hovered_unit = res["collider"]		
 	if event is InputEventMouseButton:
 		var shift = Input.is_key_pressed(KEY_SHIFT)
 		if event.button_index == 1 and !event.is_pressed():
@@ -37,10 +43,10 @@ func _input(event):
 			print(res)
 		if event.button_index == 2 and !event.is_pressed():
 			var res = get_object_under_mouse()
-			print(res["position"])
-			emit_signal("right_clicked", res["position"], shift)
-			
-		
+			if res["collider"].get_class() == "character":
+				emit_signal("unit_right_clicked", res["collider"], shift)
+			else:
+				emit_signal("right_clicked", res["position"], shift)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
