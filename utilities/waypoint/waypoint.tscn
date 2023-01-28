@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cko4i6vjieuwd"]
+
+[ext_resource type="Shader" path="res://utilities/waypoint/waypoint.gdshader" id="1_t2323"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_f05to"]
+frequency = 0.018
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wr52t"]
+seamless = true
+seamless_blend_skirt = 0.333
+noise = SubResource("FastNoiseLite_f05to")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijt3b"]
+render_priority = 2
+shader = ExtResource("1_t2323")
+shader_parameter/noise = SubResource("NoiseTexture2D_wr52t")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ka0k0"]
+material = SubResource("ShaderMaterial_ijt3b")
+flip_faces = true
+cap_top = false
+
+[node name="waypoint" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_ka0k0")

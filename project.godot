@@ -6,22 +6,13 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Node",
-"class": "Controller",
-"language": "GDScript",
-"path": "res://character/controller.gd"
-} ]
-_global_script_class_icons={
-"Controller": ""
-}
+config_version=5
 
 [application]
 
 config/name="strategy_game"
 run/main_scene="res://demo/demo.tscn"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 
 [autoload]
@@ -30,7 +21,6 @@ HumanInput="*res://human_input/human_input.tscn"
 
 [display]
 
-window/stretch/mode="viewport"
 window/stretch/shrink=1.5
 
 [gui]

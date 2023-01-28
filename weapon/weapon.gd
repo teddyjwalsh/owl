@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 # Declare member variables here. Examples:
@@ -11,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func attack(target):
-	var new_projectile = projectile.instance()
+	var new_projectile = projectile.instantiate()
 	new_projectile.target = target
 	new_projectile.global_transform.origin = get_parent().get_parent().global_transform.origin + Vector3(0,1,0)
 	

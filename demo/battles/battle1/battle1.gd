@@ -1,18 +1,16 @@
-extends Node3D
+extends Node
 
 var unit_controller_scene = preload("res://unit_controller/unit_controller.tscn")
 var character_scene = preload("res://character/character.tscn")
-var main_menu_scene = preload("res://demo/main_menu/main_menu.tscn")
-var battle1_scene = preload("res://demo/battles/battle1/battle1.tscn")
-var battle1 = null
-var main_menu = null
+var map_scene = preload("res://map/map.tscn")
+var map = null
 var rng = RandomNumberGenerator.new()
 var team = null
 
-func _ready():
-	main_menu = main_menu_scene.instantiate()
-	add_child(main_menu)
-	
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
 func generate_demo_warrior():
 	rng.randomize()
 	var new_unit = character_scene.instantiate()
@@ -58,23 +56,29 @@ func generate_demo_monk():
 	
 func generate_demo_team():
 	var unit_controller = unit_controller_scene.instantiate()
-	
 	add_child(unit_controller)
-	unit_controller.set_human_control()
+	unit_controller.main_team.team_number = 2
 	unit_controller.main_team.add_unit(generate_demo_archer())
 	unit_controller.main_team.add_unit(generate_demo_warrior())
 	unit_controller.main_team.add_unit(generate_demo_mage())
 	unit_controller.main_team.add_unit(generate_demo_monk())
-	unit_controller.main_team.load_intro()
 	team = unit_controller.main_team
-	var team_scene = team.intro_scene
-	team_scene.get_node("MarginContainer/Button"). \
-		connect("pressed",Callable(self,"_on_join_battle_press"))
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
 	
-	
-func _on_join_battle_press():
-	print("JOIN BATTLE")
-	battle1 = battle1_scene.instantiate()
-	add_child(battle1)
-	battle1.load_in(team)
-	team.intro_scene.queue_free()
+func load_in(in_player_team):
+	map = map_scene.instantiate()
+	add_child(map)
+	for _i in map.get_children():
+		print(_i)
+	var camera = map.get_node("Camera3D")
+	camera.current = true
+	self.generate_demo_team()
+	map.load_team(in_player_team,1)
+	map.load_team(team,2)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass

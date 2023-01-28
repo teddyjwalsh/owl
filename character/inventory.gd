@@ -12,7 +12,7 @@ var armor_slot = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	weapon_slot = weapon.instance()
+	weapon_slot = weapon.instantiate()
 	add_child(weapon_slot)
 	weapon_slot.owner = owner
 

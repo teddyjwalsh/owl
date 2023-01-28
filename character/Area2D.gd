@@ -4,10 +4,10 @@ extends Area2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-onready var poly = $CollisionShape2D.get_shape()
+@onready var poly = $CollisionShape2D.get_shape()
 var previous_width = 0
 
-onready var hi = get_node("/root/HumanInput")
+@onready var hi = get_node("/root/HumanInput")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

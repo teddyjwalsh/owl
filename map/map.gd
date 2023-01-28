@@ -1,4 +1,4 @@
-extends Spatial
+extends Node3D
 
 
 # Declare member variables here. Examples:
@@ -6,18 +6,17 @@ extends Spatial
 # var b = "text"
 
 var charact = preload("res://unit_controller/unit_controller.tscn")
-onready var camera = $campos.get_node("Camera")
+@onready var camera = $Camera3D
 var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var instance = charact.instance()
+	#var instance = charact.instantiate()
 	#instance.name = "u"
-	add_child(instance)
-	
-	$campos.transform.origin = Vector3(0,20,50)
+	#add_child(instance)
+	camera.transform.origin = Vector3(0,30,40)
 	camera.look_at(Vector3(0,0,0),Vector3(0,1,0))
-	camera.set_orthogonal(65,1,400)
+	camera.set_orthogonal(62,1,400)
 
 func load_team(in_team, team_spawn_position):
 	var radius = $team1_start.radius
@@ -27,7 +26,7 @@ func load_team(in_team, team_spawn_position):
 		radius = $team1_start.radius
 	for unit in in_team.units:
 		rng.randomize()
-		var rand_radius = rng.randf_range(0, radius)
+		var rand_radius = rng.randf_range(8.0, radius)
 		rng.randomize()
 		var rand_az = rng.randf_range(0, 2*PI)
 		var rand_pos = spawn_pos + Vector3(rand_radius*cos(rand_az),0.0,rand_radius*sin(rand_az))

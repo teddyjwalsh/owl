@@ -24,7 +24,7 @@ void fragment()
 	float val = texture(noise, vec2(UV.x*radial_proximity, UV.y*sin(TIME))).x*1.0*radial_proximity;
 	if (val > 0.3)
 	{
-		ALPHA = 1.0
+		ALPHA = 1.0;
 	}
 	else
 	{

@@ -1,18 +1,18 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://cntrxg0qfslqq"]
 
-[ext_resource path="res://projectile/projectile.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://projectile/projectile.gd" id="1"]
 
-[sub_resource type="SphereShape" id=3]
+[sub_resource type="SphereShape3D" id="SphereShape3D_hmrfa"]
 radius = 0.563
 
-[sub_resource type="PrismMesh" id=2]
+[sub_resource type="PrismMesh" id="PrismMesh_86oh8"]
 
-[node name="projectile" type="Area"]
-script = ExtResource( 1 )
+[node name="projectile" type="Area3D"]
+script = ExtResource("1")
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 3 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_hmrfa")
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
-mesh = SubResource( 2 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("PrismMesh_86oh8")
