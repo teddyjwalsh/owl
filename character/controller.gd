@@ -83,7 +83,9 @@ func process_idle(in_command, delta):
 func _process(delta):
 	if command_queue.size() > 0 and current_command == null:
 		var next_command = command_queue.front()
+		current_line.clear()
 		if current_command == null and current_cooldown == null:
+			
 			new_command = true
 			if next_command["type"] == "MOVE":
 				print("MOVE")

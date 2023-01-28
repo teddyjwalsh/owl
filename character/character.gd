@@ -10,6 +10,7 @@ extends Node
 var base_width = 32
 var team = 0
 var full_name = "default"
+var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

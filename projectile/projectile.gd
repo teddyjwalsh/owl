@@ -1,14 +1,15 @@
 extends Node3D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var miss_scene = preload("res://indicators/miss_indicator/miss_indicator.tscn")
 
 var is_homing = true
 var target = null
 var speed = 50.0
 var damage = 10
+var weapon = null
+
+func sigmoid(x):
+	return 1/(1+exp(-x))
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,13 +23,28 @@ func _process(delta):
 		var dist = dir.length()
 		global_transform.origin += norm_dir*delta*speed
 		
+func calculate_miss_chance(in_attacker, in_enemy, in_weapon):
+	var vec = in_enemy.global_transform.origin - in_attacker.global_transform.origin
+	var dist = vec.length()
+	var hit_chance = (-sigmoid(in_attacker.traits.get_aim()*in_enemy.traits.get_size()*0.1*(dist - in_weapon.range)) + 1)
+	return 1 - hit_chance
+	
+func spawn_miss(pos):
+	var new_miss = miss_scene.instantiate()
+	new_miss.cur_pos = pos
+	get_tree().get_root().add_child(new_miss)
 
 func body_entered(body):
 	print("collide")
 	print(body)
 	if body.get_class() == "character":
 		if body != owner:
-			body.traits.add_health(-damage)
+			var miss_chance = calculate_miss_chance(owner, body, weapon)
+			var draw = owner.rng.randf_range(0,1.0)
+			if draw > miss_chance:
+				body.traits.add_health(-damage)
+			else:
+				spawn_miss(global_transform.origin)
 			queue_free()
 	elif body.get_class() == "StaticBody3D":
 		queue_free()

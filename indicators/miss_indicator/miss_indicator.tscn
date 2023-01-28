@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://buc2073vh426y"]
+
+[ext_resource type="Script" path="res://indicators/miss_indicator/miss_indicator.gd" id="1_xqrxb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2w08q"]
+font_size = 10
+
+[node name="miss_indicator" type="Node2D"]
+script = ExtResource("1_xqrxb")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 24.0
+offset_bottom = 17.0
+text = "MISS"
+label_settings = SubResource("LabelSettings_2w08q")

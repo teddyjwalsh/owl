@@ -22,7 +22,6 @@ var ideal_temperature = 72
 var temper = 1.0
 var aim = 1.0
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var mean = 1.0
@@ -45,6 +44,7 @@ func _ready():
 	gen_trait_value("magic", mean, dev)
 	gen_trait_value("age", 28, 10)
 	gen_trait_value("intelligence", mean, dev)
+	gen_trait_value("aim", mean, dev)
 	gen_trait_value("temper", mean, dev)
 	gen_trait_value("ideal_temperature", 72, 20)
 	#dexterity = rng.randfn(mean, dev)
@@ -115,7 +115,10 @@ func get_temperature_coefficient():
 	return 1.0/abs((ideal_temperature) - (current_temperature) + 1)
 
 func get_energy_regen():
-	return get_age_coefficient()*strength*(stamina/100.0)*get_temperature_coefficient()*pow(health,0.3)
+	return 3*get_age_coefficient()*strength*(stamina/100.0)*get_temperature_coefficient()*pow(health,0.3)
+	
+func get_aim():
+	return dexterity*aim
 	
 func add_energy(delta):
 	energy += delta/stamina
