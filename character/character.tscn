@@ -23,6 +23,7 @@ shader = ExtResource("3")
 shader_parameter/angle = -0.3
 shader_parameter/position = -0.2
 shader_parameter/spread = 0.5
+shader_parameter/color = Vector3(0.3, 1, 0.4)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_lesbp"]
 material = SubResource("ShaderMaterial_5gsgh")

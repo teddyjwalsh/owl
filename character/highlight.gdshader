@@ -6,6 +6,7 @@ uniform sampler2D noise;
 uniform float angle = -0.3;
 uniform float position = -0.2;
 uniform float spread : hint_range(0.0, 1.0) = 0.5;
+uniform vec3 color;
 
 varying vec3 vtx;
 
@@ -30,7 +31,7 @@ void fragment()
 	{
 		ALPHA = 0.0;
 	}
-	vec3 out_col = vec3(0.3,1.0,0.4);
+	vec3 out_col = color;//vec3(0.3,1.0,0.4);
 	ALBEDO = texture(noise, vec2(UV.x*radial_proximity, UV.y*TIME/1999.0)).x*out_col;
 	EMISSION = out_col;
 	

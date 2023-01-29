@@ -7,6 +7,7 @@ var target = null
 var speed = 50.0
 var damage = 10
 var weapon = null
+var firer = null
 
 func sigmoid(x):
 	return 1/(1+exp(-x))
@@ -26,7 +27,7 @@ func _process(delta):
 func calculate_miss_chance(in_attacker, in_enemy, in_weapon):
 	var vec = in_enemy.global_transform.origin - in_attacker.global_transform.origin
 	var dist = vec.length()
-	var hit_chance = (-sigmoid(in_attacker.traits.get_aim()*in_enemy.traits.get_size()*0.1*(dist - in_weapon.range)) + 1)
+	var hit_chance = (-sigmoid(in_attacker.traits.get_aim()*in_enemy.traits.get_size()*0.1*(dist - in_weapon.range*1.1)) + 1)
 	return 1 - hit_chance
 	
 func spawn_miss(pos):
@@ -38,9 +39,9 @@ func body_entered(body):
 	print("collide")
 	print(body)
 	if body.get_class() == "character":
-		if body != owner:
-			var miss_chance = calculate_miss_chance(owner, body, weapon)
-			var draw = owner.rng.randf_range(0,1.0)
+		if body != firer:
+			var miss_chance = calculate_miss_chance(firer, body, weapon)
+			var draw = firer.rng.randf_range(0,1.0)
 			if draw > miss_chance:
 				body.traits.add_health(-damage)
 			else:

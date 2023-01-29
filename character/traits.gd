@@ -71,6 +71,9 @@ func get_age_coefficient():
 func get_movespeed():
 	return get_age_coefficient()*(get_temperature_coefficient())*pow(energy, 0.2)/(get_equipment_size_coefficient())
 
+func get_melee_attack_damage_multiplier():
+	return temper*get_age_coefficient()*strength*(get_temperature_coefficient())*pow(energy, 0.2)
+
 func get_melee_attack_speed():
 	return get_age_coefficient()*agility*strength*(get_temperature_coefficient())*pow(energy, 0.2)/(get_equipment_size_coefficient())
 	
@@ -83,11 +86,11 @@ func get_anxiety_coefficient():
 func get_ranged_attack_speed():
 	return get_age_coefficient()*agility*dexterity*(get_temperature_coefficient())*pow(energy, 0.2)*get_anxiety_coefficient()
 	
-func get_ranged_attack_period():
-	return pow(1.0/get_ranged_attack_speed(), 0.3)
+func get_ranged_attack_period(in_weapon):
+	return 200*pow(1.0/(get_ranged_attack_speed()*in_weapon.base_attack_speed), 0.8)
 	
-func get_melee_attack_period():
-	return pow(1.0/get_melee_attack_speed(), 0.3)
+func get_melee_attack_period(in_weapon):
+	return 200*pow(1.0/get_melee_attack_speed()*in_weapon.base_attack_speed, 0.8)
 
 func get_movement_energy():
 	return get_age_coefficient()*get_size()*0.75
@@ -112,7 +115,7 @@ func get_equipment_size_coefficient():
 	
 func get_temperature_coefficient():
 	var current_temperature = get_parent().get_node("env_sensor").get_temperature()
-	return 1.0/abs((ideal_temperature) - (current_temperature) + 1)
+	return pow(1.0/abs(current_temperature - ideal_temperature), 0.04)
 
 func get_energy_regen():
 	return 3*get_age_coefficient()*strength*(stamina/100.0)*get_temperature_coefficient()*pow(health,0.3)

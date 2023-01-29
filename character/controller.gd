@@ -26,7 +26,6 @@ var line_scene = preload("res://utilities/line/line.tscn")
 var nav_lines = null
 var current_line = null
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	traits = get_parent().get_node("traits")
@@ -66,7 +65,7 @@ func process_attack_command(in_command, delta):
 	#get_parent().global_transform.origin = in_command["dest"]
 	state = "IDLE"
 	print("sdfsdfsdf")
-	initial_reload = traits.get_ranged_attack_period()
+	initial_reload = traits.get_ranged_attack_period(get_parent().inventory.weapon_slot)
 	current_reload = initial_reload
 	
 func process_idle(in_command, delta):
@@ -85,7 +84,6 @@ func _process(delta):
 		var next_command = command_queue.front()
 		current_line.clear()
 		if current_command == null and current_cooldown == null:
-			
 			new_command = true
 			if next_command["type"] == "MOVE":
 				print("MOVE")
@@ -138,6 +136,8 @@ func set_meta_pressed(in_command):
 	print("SET1")
 	current_line.clear()
 	if current_cooldown == null or in_command["type"] == "IDLE":
+		if current_reload != null and in_command["type"] == "ATTACK":
+			return
 		print("SET2")
 		current_command = in_command
 		new_command = true

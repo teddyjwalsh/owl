@@ -68,7 +68,7 @@ func _stop(shift):
 		queue_command_selected({"type": "IDLE"})
 	else:
 		set_command_selected({"type": "IDLE"})
-		
+
 func _unit_selected(unit_index):
 	if unit_index < main_team.units.size():
 		selected_unit = main_team.units[unit_index]
