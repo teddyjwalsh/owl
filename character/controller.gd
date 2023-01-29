@@ -32,6 +32,7 @@ func _ready():
 	current_line = line_scene.instantiate()
 	add_child(current_line)
 
+
 func process_move_command(in_command, delta):
 	current_cooldown = traits.get_after_movement_cooldown()
 	initial_cooldown = current_cooldown
@@ -77,6 +78,7 @@ func process_idle(in_command, delta):
 		current_reload -= delta
 		if current_reload <= 0:
 			current_reload = null
+	current_command = null
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

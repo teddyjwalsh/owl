@@ -8,7 +8,7 @@ extends Node
 @onready var ray = $RayCast3D
 @onready var name_gen = $name_gen
 var base_width = 32
-var team = 0
+var team = null
 var full_name = "default"
 var rng = RandomNumberGenerator.new()
 var color = null

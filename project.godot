@@ -18,6 +18,7 @@ config/icon="res://icon.png"
 [autoload]
 
 HumanInput="*res://human_input/human_input.tscn"
+WeaponGenerator="*res://weapon/weapon_generator/weapon_generator.tscn"
 
 [display]
 

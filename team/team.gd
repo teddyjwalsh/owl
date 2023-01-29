@@ -15,7 +15,7 @@ func _ready():
 func add_unit(in_unit):
 	add_child(in_unit)
 	units.append(in_unit)
-	in_unit.team = team_number
+	in_unit.team = self
 	var highlight = in_unit.get_node("highlight")
 	var mat = highlight.get_active_material(0).duplicate()
 	highlight.set_surface_override_material(0, mat)

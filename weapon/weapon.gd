@@ -34,7 +34,7 @@ func attack(target):
 		var params = PhysicsRayQueryParameters3D.new()
 		params.from = owner.global_transform.origin + Vector3(0,1,0)
 		params.to = owner.global_transform.origin + dir * range  + Vector3(0,1,0)
-		params.exclude = [owner]
+		params.exclude = owner.team.units
 		params.collision_mask = 1
 		var space_state = get_world_3d().direct_space_state
 		var selection = space_state.intersect_ray(params)

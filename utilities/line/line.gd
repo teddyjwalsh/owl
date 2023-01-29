@@ -14,6 +14,9 @@ func clear():
 	lines.clear()
 	if waypoint != null:
 		waypoint.queue_free()
+		
+func count():
+	return lines.size()
 
 func path(in_points, y_offset, color = Color.WHITE_SMOKE):
 	if in_points.size():

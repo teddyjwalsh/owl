@@ -8,6 +8,7 @@ var speed = 50.0
 var damage = 10
 var weapon = null
 var firer = null
+var friendly_fire = false
 
 func sigmoid(x):
 	return 1/(1+exp(-x))
@@ -39,14 +40,15 @@ func body_entered(body):
 	print("collide")
 	print(body)
 	if body.get_class() == "character":
-		if body != firer:
-			var miss_chance = calculate_miss_chance(firer, body, weapon)
-			var draw = firer.rng.randf_range(0,1.0)
-			if draw > miss_chance:
-				body.traits.add_health(-damage)
-			else:
-				spawn_miss(global_transform.origin)
-			queue_free()
+		if friendly_fire or body.team != firer.team:
+			if body != firer:
+				var miss_chance = calculate_miss_chance(firer, body, weapon)
+				var draw = firer.rng.randf_range(0,1.0)
+				if draw > miss_chance:
+					body.traits.add_health(-damage)
+				else:
+					spawn_miss(global_transform.origin)
+				queue_free()
 	elif body.get_class() == "StaticBody3D":
 		queue_free()
 			

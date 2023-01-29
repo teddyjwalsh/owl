@@ -29,11 +29,19 @@ func set_human_control():
 func set_command_selected(in_command):
 	print("setggggg")
 	if selected_unit != null:
-		selected_unit.controller.set_meta_pressed(in_command)
+		selected_unit.controller.set_command(in_command)
 		
 func queue_command_selected(in_command):
 	if selected_unit != null:
 		selected_unit.controller.queue_command(in_command)
+		
+func set_command(in_command, in_unit):
+	if in_unit != null:
+		in_unit.controller.set_command(in_command)
+		
+func queue_command(in_command, in_unit):
+	if in_unit != null:
+		in_unit.controller.queue_command(in_command)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -57,7 +65,7 @@ func _right_clicked(pos, shift):
 		set_command_selected({"type": "MOVE", "dest": pos})
 		
 func _unit_right_clicked(target, shift):
-	if target.team != main_team.team_number:
+	if target.team.team_number != main_team.team_number:
 		if shift:
 			queue_command_selected({"type": "ATTACK", "target": target})
 		else:
@@ -78,4 +86,8 @@ func _process(delta):
 		unit.select_indicator.visible = false
 	if selected_unit != null:
 		selected_unit.select_indicator.visible = true
+		
+func give_team(in_team):
+	main_team = in_team
+	add_child(in_team)
 		

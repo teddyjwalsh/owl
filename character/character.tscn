@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://cf7nsep3xymjr"]
 
-[ext_resource type="Script" path="res://character/controller.gd" id="1"]
 [ext_resource type="Script" path="res://character/character.gd" id="2"]
+[ext_resource type="Script" path="res://character/controller2.gd" id="2_0r8xn"]
 [ext_resource type="Shader" path="res://character/highlight.gdshader" id="3"]
 [ext_resource type="Script" path="res://character/inventory.gd" id="4"]
 [ext_resource type="Script" path="res://character/traits.gd" id="5"]
@@ -32,7 +32,7 @@ material = SubResource("ShaderMaterial_5gsgh")
 script = ExtResource("2")
 
 [node name="controller" type="Node" parent="."]
-script = ExtResource("1")
+script = ExtResource("2_0r8xn")
 
 [node name="traits" type="Node" parent="."]
 script = ExtResource("5")
