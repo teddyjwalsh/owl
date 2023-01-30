@@ -24,10 +24,14 @@ func load_team(in_team, team_spawn_position):
 	var radius = $team1_start.radius
 	var spawn_pos = $team1_start.global_transform.origin
 	if team_spawn_position == 2:
+		for unit in in_team.units:
+			unit.set_color(Color(0.7,0.2,0.3))
 		spawn_pos = $team2_start.global_transform.origin
 		radius = $team1_start.radius
 		team2 = in_team
 	else:
+		for unit in in_team.units:
+			unit.set_color(Color(0.3,0.2,0.7))
 		team1 = in_team
 		create_hud()
 	for unit in in_team.units:

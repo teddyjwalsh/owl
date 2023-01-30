@@ -51,6 +51,8 @@ func process_attack_command(target):
 	get_parent().inventory.attack(target)
 	print("sdfsdfsdf")
 	initial_reload = get_parent().get_node("traits").get_ranged_attack_period(get_parent().inventory.weapon_slot)
+	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
+	anim_player.play("rifle")
 	current_reload = initial_reload
 	
 func process_new_command(in_command):

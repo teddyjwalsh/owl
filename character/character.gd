@@ -1,5 +1,6 @@
 extends Node
 
+var char_model_scene = preload("res://character_model.tscn")
 @onready var traits = get_node("traits")
 @onready var controller = get_node("controller")
 @onready var inventory = get_node("inventory")
@@ -19,8 +20,16 @@ func _ready():
 	full_name = name_gen.gen_full_names(1)[0]
 	full_name = full_name[0] + " " + full_name[1]
 	print(full_name)
+	var chmod = char_model_scene.instantiate()
+	chmod.name = "character_model2"
+	chmod.rotate_object_local(Vector3(0,1,0),PI)
+	chmod.scale = Vector3(0.45,0.45,0.45)
+	add_child(chmod)
 	$character_model2/AnimationPlayer.set_blend_time("idle", "run", 0.2)
 	$character_model2/AnimationPlayer.set_blend_time("run", "idle", 0.2)
+	$character_model2/AnimationPlayer.set_blend_time("rifle", "idle", 10.0)
+	$character_model2/AnimationPlayer.set_blend_time("rifle", "run", 2.0)
+	
 
 func get_movespeed():
 	return 50
@@ -35,3 +44,8 @@ func get_class():
 func _process(delta):
 	var col_point = ray.get_collision_point()
 	self.global_transform.origin.y = col_point.y
+	
+func set_color(in_color):
+	var new_mat = $character_model2/Armature/Skeleton3D/Cube.get_active_material(0).duplicate()
+	new_mat.albedo_color = in_color
+	$character_model2/Armature/Skeleton3D/Cube.set_surface_override_material(0, new_mat)

@@ -9,6 +9,10 @@ var damage = 10
 var weapon = null
 var firer = null
 var friendly_fire = false
+var imm_mesh = null
+
+var last_positions = []
+var max_history = 20
 
 func sigmoid(x):
 	return 1/(1+exp(-x))
@@ -17,6 +21,7 @@ func sigmoid(x):
 func _ready():
 	connect("body_entered",Callable(self,"body_entered"))
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if is_homing:
@@ -24,6 +29,10 @@ func _process(delta):
 		var norm_dir = dir.normalized()
 		var dist = dir.length()
 		global_transform.origin += norm_dir*delta*speed
+		#look_at(target.global_transform.origin)
+		last_positions.push_front(global_transform.origin)
+		if last_positions.size() > max_history:
+			last_positions.pop_back()
 		
 func calculate_miss_chance(in_attacker, in_enemy, in_weapon):
 	var vec = in_enemy.global_transform.origin - in_attacker.global_transform.origin

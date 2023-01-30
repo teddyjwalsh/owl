@@ -1,11 +1,57 @@
-[gd_scene load_steps=4 format=3 uid="uid://cntrxg0qfslqq"]
+[gd_scene load_steps=14 format=3 uid="uid://cntrxg0qfslqq"]
 
 [ext_resource type="Script" path="res://projectile/projectile.gd" id="1"]
+[ext_resource type="Shader" path="res://projectile/projectile_trail2.gdshader" id="2_142mn"]
+[ext_resource type="Script" path="res://projectile/MeshInstance3D3.gd" id="3_ctwbo"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_07tge"]
 radius = 0.563
 
 [sub_resource type="PrismMesh" id="PrismMesh_syiaa"]
+
+[sub_resource type="Curve" id="Curve_xtnqq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_71hlt"]
+curve = SubResource("Curve_xtnqq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f5rvs"]
+lifetime_randomness = 0.03
+emission_shape = 1
+emission_sphere_radius = 0.33
+direction = Vector3(0, 0, 0)
+spread = 42.12
+flatness = 0.08
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_71hlt")
+color = Color(0.972549, 0, 0.972549, 1)
+
+[sub_resource type="Curve" id="Curve_ohwge"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0qwg"]
+render_priority = 9
+shader = ExtResource("2_142mn")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_kb054"]
+material = SubResource("ShaderMaterial_d0qwg")
+size = 0.3
+sections = 16
+section_length = 0.45
+curve = SubResource("Curve_ohwge")
+
+[sub_resource type="Curve" id="Curve_v882o"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_51iys"]
+size = 1.683
+section_length = 0.283
+curve = SubResource("Curve_v882o")
 
 [node name="projectile" type="Area3D"]
 script = ExtResource("1")
@@ -15,4 +61,38 @@ shape = SubResource("SphereShape3D_07tge")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+visible = false
 mesh = SubResource("PrismMesh_syiaa")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.00342078, 0.999994, 0, -0.999994, 0.00342078, 0, 0, 0.3)
+visible = false
+amount = 1
+lifetime = 2.84
+fixed_fps = 120
+local_coords = true
+transform_align = 2
+trail_enabled = true
+trail_lifetime = 0.18
+process_material = SubResource("ParticleProcessMaterial_f5rvs")
+draw_pass_1 = SubResource("RibbonTrailMesh_kb054")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("RibbonTrailMesh_51iys")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.301)
+visible = false
+amount = 1
+lifetime = 2.84
+fixed_fps = 120
+local_coords = true
+transform_align = 2
+trail_enabled = true
+trail_lifetime = 0.18
+process_material = SubResource("ParticleProcessMaterial_f5rvs")
+draw_pass_1 = SubResource("RibbonTrailMesh_kb054")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+script = ExtResource("3_ctwbo")
