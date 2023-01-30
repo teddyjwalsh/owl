@@ -2,17 +2,17 @@
 
 [ext_resource type="Script" path="res://projectile/projectile.gd" id="1"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_hmrfa"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_07tge"]
 radius = 0.563
 
-[sub_resource type="PrismMesh" id="PrismMesh_86oh8"]
+[sub_resource type="PrismMesh" id="PrismMesh_syiaa"]
 
 [node name="projectile" type="Area3D"]
 script = ExtResource("1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_hmrfa")
+shape = SubResource("SphereShape3D_07tge")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-mesh = SubResource("PrismMesh_86oh8")
+mesh = SubResource("PrismMesh_syiaa")

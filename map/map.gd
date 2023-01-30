@@ -37,8 +37,9 @@ func load_team(in_team, team_spawn_position):
 		var rand_az = rng.randf_range(0, 2*PI)
 		var rand_pos = spawn_pos + Vector3(rand_radius*cos(rand_az),0.0,rand_radius*sin(rand_az))
 		unit.global_transform.origin = rand_pos
-	
-	
+
+func bake_navmesh():
+	$NavigationRegion3D.bake_navigation_mesh()
 
 func create_hud():
 	var spawn_pos = Vector3(0,0,0)

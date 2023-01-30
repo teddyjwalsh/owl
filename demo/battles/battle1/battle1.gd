@@ -3,6 +3,7 @@ extends Node
 var unit_controller_scene = preload("res://unit_controller/unit_controller.tscn")
 var enemy_scene = preload("res://ai/basic_enemy_ai/basic_enemy_ai.tscn")
 var character_scene = preload("res://character/character.tscn")
+var barrier_scene = preload("res://map/solid_object/solid_object.tscn")
 var map_scene = preload("res://map/map.tscn")
 var map = null
 var rng = RandomNumberGenerator.new()
@@ -83,6 +84,8 @@ func _ready():
 func load_in(in_player_team):
 	map = map_scene.instantiate()
 	add_child(map)
+	map.get_node("NavigationRegion3D").add_child(barrier_scene.instantiate())
+	map.bake_navmesh()
 	for _i in map.get_children():
 		print(_i)
 	var camera = map.get_node("Camera3D")

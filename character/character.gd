@@ -19,6 +19,8 @@ func _ready():
 	full_name = name_gen.gen_full_names(1)[0]
 	full_name = full_name[0] + " " + full_name[1]
 	print(full_name)
+	$character_model2/AnimationPlayer.set_blend_time("idle", "run", 0.2)
+	$character_model2/AnimationPlayer.set_blend_time("run", "idle", 0.2)
 
 func get_movespeed():
 	return 50

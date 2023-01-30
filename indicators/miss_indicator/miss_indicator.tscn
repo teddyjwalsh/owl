@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://indicators/miss_indicator/miss_indicator.gd" id="1_xqrxb"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_2w08q"]
+[sub_resource type="LabelSettings" id="LabelSettings_vbd5b"]
 font_size = 10
 
 [node name="miss_indicator" type="Node2D"]
@@ -12,4 +12,4 @@ script = ExtResource("1_xqrxb")
 offset_right = 24.0
 offset_bottom = 17.0
 text = "MISS"
-label_settings = SubResource("LabelSettings_2w08q")
+label_settings = SubResource("LabelSettings_vbd5b")

@@ -2,22 +2,22 @@
 
 [ext_resource type="Shader" path="res://utilities/waypoint/waypoint.gdshader" id="1_t2323"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_f05to"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3btsg"]
 frequency = 0.018
 fractal_octaves = 1
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wr52t"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fntp6"]
 seamless = true
 seamless_blend_skirt = 0.333
-noise = SubResource("FastNoiseLite_f05to")
+noise = SubResource("FastNoiseLite_3btsg")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijt3b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ugubq"]
 render_priority = 2
 shader = ExtResource("1_t2323")
-shader_parameter/noise = SubResource("NoiseTexture2D_wr52t")
+shader_parameter/noise = SubResource("NoiseTexture2D_fntp6")
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_ka0k0"]
-material = SubResource("ShaderMaterial_ijt3b")
+[sub_resource type="CylinderMesh" id="CylinderMesh_2njfr"]
+material = SubResource("ShaderMaterial_ugubq")
 flip_faces = true
 cap_top = false
 
@@ -25,4 +25,4 @@ cap_top = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CylinderMesh_ka0k0")
+mesh = SubResource("CylinderMesh_2njfr")

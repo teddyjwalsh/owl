@@ -12,4 +12,4 @@ func _ready():
 func _process(delta):
 	if get_viewport().get_camera_3d() != null:
 		var screen_pos = get_viewport().get_camera_3d().unproject_position(get_parent().global_transform.origin)
-		set_global_position(screen_pos + Vector2(-max_width/2, -65))
+		set_global_position(screen_pos + Vector2(-max_width/2, 0))

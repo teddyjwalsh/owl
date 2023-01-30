@@ -1,6 +1,7 @@
 extends Node
 
 var state = "IDLE"
+var prev_state = "IDLE"
 var current_reload = null
 var initial_reload = null
 var current_cooldown = null
@@ -87,7 +88,11 @@ func _process(delta):
 	update_cooldowns(delta)
 	
 func _physics_process(delta):
+	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
+	var ms = get_parent().traits.get_movespeed()
 	if state == "MOVE" or state == "RELOADING_MOVE":
+		if anim_player.current_animation != "run":
+			anim_player.play("run", -1, 2*ms)
 		var current_location = get_parent().global_transform.origin
 		var next_location = get_parent().nav.get_next_path_position()
 		var dir = (next_location - current_location)
@@ -97,6 +102,13 @@ func _physics_process(delta):
 		get_parent().set_velocity(new_velocity)
 		get_parent().move_and_slide()
 		get_parent().velocity
+		next_location.y = get_parent().global_transform.origin.y
+		get_parent().look_at(next_location, Vector3(0,1,0))
 		get_parent().get_node("traits").add_energy(-distance*get_parent().get_node("traits").get_movement_energy()*delta)
+	else:
+		if anim_player.current_animation != "idle":
+			anim_player.play("idle")
+		
+		
 	
 	
