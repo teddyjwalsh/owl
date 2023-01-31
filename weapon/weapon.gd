@@ -22,7 +22,7 @@ func attack(target):
 	if weapon_type == 1:
 		var new_projectile = projectile.instantiate()
 		new_projectile.target = target
-		new_projectile.global_transform.origin = get_parent().get_parent().global_transform.origin + Vector3(0,1,0)
+		new_projectile.global_transform.origin = get_parent().get_parent().global_transform.origin + Vector3(0,4,0)
 		new_projectile.firer = firer
 		add_child(new_projectile)
 		new_projectile.damage = base_damage

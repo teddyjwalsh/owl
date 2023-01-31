@@ -25,7 +25,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if is_homing:
-		var dir = (target.global_transform.origin  + Vector3(0,1,0) - global_transform.origin)
+		var dir = (target.global_transform.origin  + Vector3(0,4,0) - global_transform.origin)
 		var norm_dir = dir.normalized()
 		var dist = dir.length()
 		global_transform.origin += norm_dir*delta*speed

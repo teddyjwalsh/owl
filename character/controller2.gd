@@ -6,6 +6,12 @@ var current_reload = null
 var initial_reload = null
 var current_cooldown = null
 var initial_cooldown = null
+
+var attack_animation = null
+var has_attacked = false
+var attack_target = null
+var attack_point = 5.0/8.0
+
 var command_queue = []
 
 var line_scene = preload("res://utilities/line/line.tscn")
@@ -42,18 +48,39 @@ func assess_state():
 	elif reloading:
 		state = "RELOADING"
 		current_line.clear()
+	elif attack_animation:
+		state = "ATTACKING"
 	else:
 		state = "IDLE"
 		current_line.clear()
 	return state
 	
 func process_attack_command(target):
-	get_parent().inventory.attack(target)
 	print("sdfsdfsdf")
-	initial_reload = get_parent().get_node("traits").get_ranged_attack_period(get_parent().inventory.weapon_slot)
+	has_attacked = false
+	get_parent().look_at(target.global_transform.origin, Vector3(0,1,0))
 	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
 	anim_player.play("rifle")
-	current_reload = initial_reload
+	attack_animation = anim_player.current_animation_length
+	
+	attack_target = target
+	
+func process_attack(delta):
+	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
+	if anim_player.current_animation != "rifle":
+		attack_animation = null
+	if attack_animation != null:
+		var anim_state = anim_player.current_animation_position/anim_player.current_animation_length
+		attack_animation = anim_state
+		if !has_attacked:
+			if anim_state > attack_point:
+				get_parent().inventory.attack(attack_target)
+				initial_reload = get_parent().get_node("traits").get_ranged_attack_period(get_parent().inventory.weapon_slot)
+				current_reload = initial_reload
+				has_attacked = true
+		if attack_animation <= 0:
+			attack_animation = null
+
 	
 func process_new_command(in_command):
 	if in_command["type"] == "STOP":
@@ -64,6 +91,7 @@ func process_new_command(in_command):
 		initial_cooldown = current_cooldown
 	elif in_command["type"] == "ATTACK":
 		process_attack_command(in_command["target"])
+
 		
 func update_cooldowns(delta):
 	if current_cooldown != null:
@@ -74,6 +102,7 @@ func update_cooldowns(delta):
 		current_reload -= delta
 		if current_reload <= 0:
 			current_reload = null
+
 		
 func _process(delta):
 	assess_state()
@@ -88,11 +117,15 @@ func _process(delta):
 			process_new_command(command_queue.pop_front())
 			command_queue.pop_front()
 	update_cooldowns(delta)
+	if attack_animation:
+		process_attack(delta)
 	
 func _physics_process(delta):
 	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
 	var ms = get_parent().traits.get_movespeed()
-	if state == "MOVE" or state == "RELOADING_MOVE":
+	if state == "ATTACKING":
+		return
+	elif state == "MOVE" or state == "RELOADING_MOVE":
 		if anim_player.current_animation != "run":
 			anim_player.play("run", -1, 2*ms)
 		var current_location = get_parent().global_transform.origin
