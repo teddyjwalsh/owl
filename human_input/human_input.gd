@@ -13,6 +13,8 @@ signal clicked_char(chr)
 signal right_clicked(pos, queue)
 signal unit_right_clicked(target, queue)
 signal unit_selected(unit_num)
+signal unit_hovered(unit)
+signal non_unit_hovered(unit)
 signal stop(unit_num)
 
 # Called when the node enters the scene tree for the first time.
@@ -39,13 +41,17 @@ func get_object_under_mouse():
 func _input(event):
 	if event is InputEventMouseMotion:
 		var res = get_object_under_mouse()
+		var unit_is_hovered = false
 		if res != null:
 			if "collider" in res:
 				if res["collider"].get_class() == "character":
 					hovered_unit = res["collider"]
+					emit_signal("unit_hovered", hovered_unit)
+					unit_is_hovered = true
+				else:
+					emit_signal("non_unit_hovered", res["collider"])
 	var shift = Input.is_key_pressed(KEY_SHIFT)
 	if event is InputEventMouseButton:
-		
 		if event.button_index == 1 and !event.is_pressed():
 			var res = get_object_under_mouse()
 			print(res)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cf7nsep3xymjr"]
+[gd_scene load_steps=25 format=3 uid="uid://cf7nsep3xymjr"]
 
 [ext_resource type="Script" path="res://character/character.gd" id="2"]
 [ext_resource type="Script" path="res://character/controller2.gd" id="2_0r8xn"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://character/env_sensor.gd" id="10"]
 [ext_resource type="Script" path="res://character/name_gen.gd" id="10_i77be"]
 [ext_resource type="Script" path="res://character/reload_bar.gd" id="11_gy3kr"]
+[ext_resource type="PackedScene" uid="uid://cko4i6vjieuwd" path="res://character/target_indicator/target_indicator.tscn" id="13_pa4a2"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_j15xt"]
 
@@ -608,3 +609,6 @@ skin = SubResource("Skin_m6qyc")
 libraries = {
 "": SubResource("AnimationLibrary_ut02b")
 }
+
+[node name="target_indicator" parent="." instance=ExtResource("13_pa4a2")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

@@ -10,8 +10,9 @@ var chr = preload("res://character/character.tscn")
 var team_scene = preload("res://team/team.tscn")
 
 @onready var hi = get_node("/root/HumanInput")
-var main_team = null;
+var main_team = null
 var selected_unit = null
+var targeted_unit = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,6 +26,8 @@ func set_human_control():
 	self.get_node("/root/HumanInput").connect("unit_right_clicked",Callable(self,"_unit_right_clicked"))
 	self.get_node("/root/HumanInput").connect("unit_selected",Callable(self,"_unit_selected"))
 	self.get_node("/root/HumanInput").connect("stop",Callable(self,"_stop"))
+	self.get_node("/root/HumanInput").connect("unit_hovered",Callable(self,"_unit_hovered"))
+	self.get_node("/root/HumanInput").connect("non_unit_hovered",Callable(self,"_non_unit_hovered"))
 
 func set_command_selected(in_command):
 	print("setggggg")
@@ -70,6 +73,7 @@ func _unit_right_clicked(target, shift):
 			queue_command_selected({"type": "ATTACK", "target": target})
 		else:
 			set_command_selected({"type": "ATTACK", "target": target})
+			target.get_node("target_indicator").t = 0
 
 func _stop(shift):
 	if shift:
@@ -90,4 +94,16 @@ func _process(delta):
 func give_team(in_team):
 	main_team = in_team
 	add_child(in_team)
+	
+func _unit_hovered(in_unit):
+	if targeted_unit != null:
+		targeted_unit.targeted = false
+	if in_unit.team != main_team:
+		in_unit.targeted = true
+		targeted_unit = in_unit
+		
+func _non_unit_hovered(in_unit):
+	if targeted_unit != null:
+		targeted_unit.targeted = false
+	targeted_unit = null
 		

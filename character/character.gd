@@ -13,6 +13,7 @@ var team = null
 var full_name = "default"
 var rng = RandomNumberGenerator.new()
 var color = null
+var targeted = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,6 +46,10 @@ func get_class():
 func _process(delta):
 	var col_point = ray.get_collision_point()
 	self.global_transform.origin.y = col_point.y
+	if targeted or $target_indicator.t < 1.0:
+		$target_indicator.visible = true
+	else:
+		$target_indicator.visible = false
 	
 func set_color(in_color):
 	var new_mat = $character_model2/Armature/Skeleton3D/Cube.get_active_material(0).duplicate()

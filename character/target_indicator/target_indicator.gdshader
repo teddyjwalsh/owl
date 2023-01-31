@@ -15,11 +15,11 @@ void vertex()
 void fragment() 
 {
 	float start_multiplier = pow(max(0, 1.0 - local_time),3);
-	float max_height = 2.0;
+	float max_height = 2.0 + start_multiplier;
 	ALPHA = pow(max(0, max_height - (local_pos.y + 1.0))/max_height,2);
 	ALBEDO = vec3(0.0, 0.9, 0.2);// + vec3(1.0, 1.0, 1.0)*pow(max(0, max_height - (local_pos.y + 1.0))/max_height,4);
 	float coord = UV.y*float(int(local_pos.x*100.0*sin(TIME))/100)*0.5;
-	EMISSION = 3.0*vec3(0.0,3.0*texture(noise, vec2(UV.x*sin(0.1*TIME), coord)).x,0.0) + vec3(1.0,1.0,1.0)*start_multiplier;
+	EMISSION = 3.0*vec3(3.0*texture(noise, vec2(UV.x*sin(0.1*TIME), coord)).x, 0.0,0.0) + vec3(1.0,1.0,1.0)*start_multiplier;
 	
 	
 	

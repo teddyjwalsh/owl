@@ -63,7 +63,7 @@ func set_trait_value(in_trait, in_val):
 	self.set(in_trait, max(0.1, in_val))
 	
 func gen_trait_value(in_trait, mean, dev):
-	self.set(in_trait, max(0, rng.randfn(mean, dev)))
+	self.set(in_trait, max(0.1, rng.randfn(mean, dev)))
 	
 func get_age_coefficient():
 	return pow(1.0/abs(age - 20), 0.04)
