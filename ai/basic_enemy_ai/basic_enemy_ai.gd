@@ -81,6 +81,7 @@ func process_attack_state(unit, cur_target):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	return;
 	var unit_num = 0
 	for unit in uc.main_team.units:
 		unit_targets[unit_num] = reassess_target(unit)

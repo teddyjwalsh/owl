@@ -29,6 +29,8 @@ func _ready():
 	$character_model2/AnimationPlayer.set_blend_time("run", "idle", 0.2)
 	$character_model2/AnimationPlayer.set_blend_time("rifle", "idle", 10.0)
 	$character_model2/AnimationPlayer.set_blend_time("rifle", "run", 2.0)
+	$character_model2/AnimationPlayer.set_blend_time("axe", "run", 1.0)
+	$character_model2/AnimationPlayer.set_blend_time("axe", "idle", 1.0)
 
 func get_movespeed():
 	return 50

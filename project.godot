@@ -22,7 +22,6 @@ WeaponGenerator="*res://weapon/weapon_generator/weapon_generator.tscn"
 
 [display]
 
-window/stretch/mode="viewport"
 window/stretch/shrink=1.5
 
 [gui]

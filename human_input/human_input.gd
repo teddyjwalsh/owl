@@ -51,11 +51,12 @@ func _input(event):
 			print(res)
 		if event.button_index == 2 and !event.is_pressed():
 			var res = get_object_under_mouse()
-			if res["collider"].get_class() == "character":
-				emit_signal("unit_right_clicked", res["collider"], shift)
-			else:
-				emit_signal("right_clicked", res["position"], shift)
-				print("RIght")
+			if "collider" in res:
+				if res["collider"].get_class() == "character":
+					emit_signal("unit_right_clicked", res["collider"], shift)
+				else:
+					emit_signal("right_clicked", res["position"], shift)
+					print("RIght")
 				
 	if event is InputEventKey and event.keycode == KEY_1:
 		emit_signal("unit_selected", 0)

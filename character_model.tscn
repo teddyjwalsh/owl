@@ -3,20 +3,3 @@
 [ext_resource type="PackedScene" uid="uid://dk571c053kms1" path="res://models/character.glb" id="1_v5bqf"]
 
 [node name="character" instance=ExtResource("1_v5bqf")]
-
-[node name="Skeleton3D" parent="Armature" index="0"]
-bones/0/position = Vector3(-7.0973e-09, 5.9634, 0.337994)
-bones/0/rotation = Quaternion(0.17329, -0.0161773, -0.00426075, 0.984729)
-bones/1/rotation = Quaternion(-0.080443, 0.0196688, -0.00511649, 0.996552)
-bones/2/position = Vector3(0.874122, 2.73649, -0.154282)
-bones/2/rotation = Quaternion(0.0762783, 0.194967, -0.967286, 0.143271)
-bones/3/rotation = Quaternion(0.251582, -0.0749489, -0.0551479, 0.963352)
-bones/4/rotation = Quaternion(-0.0688972, -0.350834, -0.921616, 0.150974)
-bones/5/rotation = Quaternion(-0.224988, -0.00427789, -0.0795754, 0.971097)
-bones/6/position = Vector3(-0.821961, 2.75252, -0.155911)
-bones/6/rotation = Quaternion(0.0361665, 0.0448002, 0.98723, 0.148532)
-bones/7/rotation = Quaternion(0.309083, 0.0768652, 0.0501584, 0.946596)
-bones/8/rotation = Quaternion(-0.0367905, 0.221459, 0.962951, 0.149423)
-bones/9/rotation = Quaternion(-0.241711, 0.00425783, 0.0854903, 0.966566)
-bones/11/position = Vector3(1.67528, 0.459209, 1.01986)
-bones/13/position = Vector3(-1.67528, 0.547382, -0.620146)

@@ -60,7 +60,7 @@ func _ready():
 	#ideal_temperature = rng.randfn(72, 20)
 	
 func set_trait_value(in_trait, in_val):
-	self.set(in_trait, max(0, in_val))
+	self.set(in_trait, max(0.1, in_val))
 	
 func gen_trait_value(in_trait, mean, dev):
 	self.set(in_trait, max(0, rng.randfn(mean, dev)))

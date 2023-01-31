@@ -31,7 +31,7 @@ func load_team(in_team, team_spawn_position):
 		team2 = in_team
 	else:
 		for unit in in_team.units:
-			unit.set_color(Color(0.3,0.2,0.7))
+			unit.set_color(Color(0.3,0.8,0.5))
 		team1 = in_team
 		create_hud()
 	for unit in in_team.units:
