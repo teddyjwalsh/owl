@@ -1,0 +1,14 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://bowq55mgk0tl2"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_3h06r"]
+
+[sub_resource type="Sky" id="Sky_0lenw"]
+sky_material = SubResource("PhysicalSkyMaterial_3h06r")
+
+[resource]
+background_mode = 1
+background_color = Color(0.905882, 0.654902, 0.654902, 1)
+sky = SubResource("Sky_0lenw")
+ambient_light_source = 3
+ambient_light_color = Color(0.305882, 0.517647, 1, 1)
+reflected_light_source = 2

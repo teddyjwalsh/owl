@@ -60,6 +60,8 @@ func _input(event):
 			if "collider" in res:
 				if res["collider"].get_class() == "character":
 					emit_signal("unit_right_clicked", res["collider"], shift)
+				elif res["collider"].get_class() == "building":
+					emit_signal("unit_right_clicked", res["collider"], shift)
 				else:
 					emit_signal("right_clicked", res["position"], shift)
 					print("RIght")

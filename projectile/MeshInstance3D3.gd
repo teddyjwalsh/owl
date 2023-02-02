@@ -1,16 +1,17 @@
 extends MeshInstance3D
 
 var mat: StandardMaterial3D = StandardMaterial3D.new()
-var trail_width = 0.5
+var trail_width = 0.2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	mesh = ImmediateMesh.new()
-	mat.no_depth_test = true
+	#mat.no_depth_test = true
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.vertex_color_use_as_albedo = true
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	#set_material_override(mat)
+	#mat.vertex_color_use_as_albedo = true
+	#mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.cull_mode = mat.CULL_DISABLED
+	set_material_override(mat)
 	#mat.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

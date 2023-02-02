@@ -2,6 +2,8 @@ extends Node
 
 var rng = RandomNumberGenerator.new()
 
+var synergy = {}
+
 var health = 1.0
 var energy = 1.0
 var stamina = 100
@@ -69,7 +71,7 @@ func get_age_coefficient():
 	return pow(1.0/abs(age - 20), 0.04)
 
 func get_movespeed():
-	return get_age_coefficient()*(get_temperature_coefficient())*pow(energy, 0.2)/(get_equipment_size_coefficient())
+	return agility*get_age_coefficient()*(get_temperature_coefficient())*pow(energy, 0.2)/(get_equipment_size_coefficient())
 
 func get_melee_attack_damage_multiplier():
 	return temper*get_age_coefficient()*strength*(get_temperature_coefficient())*pow(energy, 0.2)
@@ -139,7 +141,10 @@ func learning_curve(in_stat):
 	return sigmoid(in_stat - shift)*(1 - sigmoid(in_stat - shift))
 	
 func get_learn_delta(delta, in_stat):
-	return learning_curve(in_stat)*delta
+	return learning_curve(get(in_stat))*delta
+	
+func learn(delta, in_stat):
+	set(in_stat,get(in_stat) + get_learn_delta(delta,in_stat ))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

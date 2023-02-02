@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://cf7nsep3xymjr"]
+[gd_scene load_steps=27 format=3 uid="uid://cf7nsep3xymjr"]
 
 [ext_resource type="Script" path="res://character/character.gd" id="2"]
 [ext_resource type="Script" path="res://character/controller2.gd" id="2_0r8xn"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://character/env_sensor.gd" id="10"]
 [ext_resource type="Script" path="res://character/name_gen.gd" id="10_i77be"]
 [ext_resource type="Script" path="res://character/reload_bar.gd" id="11_gy3kr"]
+[ext_resource type="Shader" path="res://character/health_bar.gdshader" id="12_0mmr3"]
 [ext_resource type="PackedScene" uid="uid://cko4i6vjieuwd" path="res://character/target_indicator/target_indicator.tscn" id="13_pa4a2"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_j15xt"]
@@ -28,6 +29,11 @@ shader_parameter/color = Vector3(0.3, 1, 0.4)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_8ncpm"]
 material = SubResource("ShaderMaterial_t1pa4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rktgd"]
+shader = ExtResource("12_0mmr3")
+shader_parameter/current_health = null
+shader_parameter/old_health = null
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ftria"]
 resource_name = "Material.001"
@@ -487,9 +493,13 @@ script = ExtResource("11_gy3kr")
 layout_mode = 2
 script = ExtResource("7")
 
-[node name="health_bar" type="ColorRect" parent="unit_info"]
+[node name="HBoxContainer" type="HFlowContainer" parent="unit_info"]
 layout_mode = 2
 script = ExtResource("8")
+
+[node name="health_bar" type="ColorRect" parent="unit_info/HBoxContainer"]
+material = SubResource("ShaderMaterial_rktgd")
+layout_mode = 2
 
 [node name="energy_bar" type="ColorRect" parent="unit_info"]
 layout_mode = 2

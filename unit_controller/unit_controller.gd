@@ -68,12 +68,19 @@ func _right_clicked(pos, shift):
 		set_command_selected({"type": "MOVE", "dest": pos})
 		
 func _unit_right_clicked(target, shift):
-	if target.team.team_number != main_team.team_number:
+	if target.get_class() == "character":
+		if target.team.team_number != main_team.team_number:
+			if shift:
+				queue_command_selected({"type": "ATTACK", "target": target})
+				target.get_node("target_indicator").t = 0
+			else:
+				set_command_selected({"type": "ATTACK", "target": target})
+				target.get_node("target_indicator").t = 0
+	elif target.get_class() == "building":
 		if shift:
-			queue_command_selected({"type": "ATTACK", "target": target})
+			queue_command_selected({"type": "MOVE", "dest": target.get_move_to()})
 		else:
-			set_command_selected({"type": "ATTACK", "target": target})
-			target.get_node("target_indicator").t = 0
+			set_command_selected({"type": "MOVE", "dest": target.get_move_to()})
 
 func _stop(shift):
 	if shift:

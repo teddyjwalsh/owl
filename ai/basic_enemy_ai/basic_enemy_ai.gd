@@ -17,8 +17,12 @@ func _ready():
 		
 func reassess_target(unit):
 	if enemy_team.units.size():
-		var closest_unit = enemy_team.units[0]
+		var closest_unit = null
 		for enemy_unit in enemy_team.units:
+			if enemy_unit.controller.dead:
+				continue
+			elif closest_unit == null:
+				closest_unit = enemy_unit
 			var closest_dist = (closest_unit.global_transform.origin - unit.global_transform.origin).length()
 			var this_dist = (enemy_unit.global_transform.origin - unit.global_transform.origin).length()
 			if this_dist < closest_dist:
@@ -81,7 +85,6 @@ func process_attack_state(unit, cur_target):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	return;
 	var unit_num = 0
 	for unit in uc.main_team.units:
 		unit_targets[unit_num] = reassess_target(unit)

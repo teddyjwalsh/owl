@@ -10,15 +10,18 @@ var charact = preload("res://unit_controller/unit_controller.tscn")
 var rng = RandomNumberGenerator.new()
 var team1 = null
 var team2 = null
+var winner = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#var instance = charact.instantiate()
 	#instance.name = "u"
 	#add_child(instance)
-	camera.transform.origin = Vector3(0,30,40)
+	camera.transform.origin = Vector3(0,60,80)
+	#camera.transform.origin = Vector3(40,40,40)
+	camera.set_perspective(30, 0.1, 500)
 	camera.look_at(Vector3(0,0,0),Vector3(0,1,0))
-	camera.set_orthogonal(62,1,400)
+	#camera.set_orthogonal(62,1,400)
 
 func load_team(in_team, team_spawn_position):
 	var radius = $team1_start.radius
@@ -75,9 +78,21 @@ func create_hud():
 		rt.z_index = 10
 		cr.z_index = 8
 	#get_tree().get_root().add_child($Node2D)
-	
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):$
-#	pass
+func _process(delta):
+	var any_alive = false
+	for unit in team1.units:
+		if !unit.controller.dead:
+			any_alive = true
+			break
+	if !any_alive:
+		winner = 2
+		
+	any_alive = false
+	for unit in team2.units:
+		if !unit.controller.dead:
+			any_alive = true
+			break
+	if !any_alive:
+		winner = 1

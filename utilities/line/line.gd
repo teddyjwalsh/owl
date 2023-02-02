@@ -40,7 +40,8 @@ func dashed_path(in_points, y_offset, color = Color.WHITE_SMOKE, dash_length=1.0
 		#$Node3D/waypoint.transform.origin = Vector3(0,1,0)
 		waypoint.visible = true
 	else:
-		waypoint.queue_free()
+		if waypoint != null:
+			waypoint.queue_free()
 		
 func dash_line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, dash_length=1.0):
 	var vec = pos2 - pos1

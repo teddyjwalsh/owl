@@ -13,10 +13,11 @@ var base_attack_speed = 1.0
 var weapon_name = "default"
 var weapon_type = 0 # 0 is melee, ranged is 1
 var firer = null
+var animation = "axe"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 func attack(target):
 	if weapon_type == 1:
@@ -42,6 +43,7 @@ func attack(target):
 			if selection.collider != null:
 				if selection.collider.get_class() == "character":
 					selection.collider.traits.add_health(-base_damage*owner.traits.get_melee_attack_damage_multiplier())
+		target.on_hit(dir)
 
 func melee_attack(target):
 	pass

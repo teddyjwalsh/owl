@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://c3qxgy4rna7ul"]
+
+[ext_resource type="Script" path="res://town/building/building.gd" id="1_wmlcx"]
+[ext_resource type="Material" uid="uid://djdnoiceqbjnd" path="res://town/building/building.tres" id="2_p6uw0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_okjui"]
+material = ExtResource("2_p6uw0")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nbiro"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_k2ebj"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i8m52"]
+radius = 1.25912
+height = 3.92533
+
+[node name="building" type="StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+script = ExtResource("1_wmlcx")
+
+[node name="building_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+mesh = SubResource("BoxMesh_okjui")
+
+[node name="building_collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
+shape = SubResource("BoxShape3D_nbiro")
+
+[node name="door_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0, 0.244, -0.474)
+visible = false
+mesh = SubResource("BoxMesh_k2ebj")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="door_collision" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_i8m52")

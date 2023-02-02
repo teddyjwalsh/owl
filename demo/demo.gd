@@ -3,6 +3,7 @@ extends Node3D
 var unit_controller_scene = preload("res://unit_controller/unit_controller.tscn")
 var character_scene = preload("res://character/character.tscn")
 var main_menu_scene = preload("res://demo/main_menu/main_menu.tscn")
+var town_scene = preload("res://town/town.tscn")
 var battle1_scene = preload("res://demo/battles/battle1/battle1.tscn")
 var weapon_gen_scene = preload("res://weapon/weapon_generator/weapon_generator.tscn")
 var battle1 = null
@@ -86,3 +87,14 @@ func _on_join_battle_press():
 	add_child(battle1)
 	battle1.load_in(team)
 	team.intro_scene.queue_free()
+
+func _process(delta):
+	if battle1 != null:
+		if battle1.map.winner != null:
+			if battle1.map.winner == 1:
+				battle1.queue_free()
+				var new_town = town_scene.instantiate()
+				add_child(new_town)
+				new_town.load_team(team)
+				#new_town.get_node("WorldEnvironment").acti
+				

@@ -21,5 +21,6 @@ void fragment()
 		}
 	}
 	float length_ratio = clamp(length(pre_color),min_length,max_length)/length(min_color);
-	COLOR = vec4(min_color,1.0)*length_ratio;
+	//COLOR = vec4(min_color,1.0)*length_ratio;
+	COLOR = texture(SCREEN_TEXTURE, SCREEN_UV);
 }

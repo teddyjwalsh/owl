@@ -74,6 +74,7 @@ func generate_demo_team():
 	unit_controller.main_team.add_unit(generate_demo_mage())
 	unit_controller.main_team.add_unit(generate_demo_monk())
 	for unit in unit_controller.main_team.units:
+		unit.controller.dead = true
 		unit.get_node("controller").current_line.visible = false
 	team = unit_controller.main_team
 
