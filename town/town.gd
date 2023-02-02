@@ -29,6 +29,8 @@ func _ready():
 	var distance_variance = 10
 	var last_angle = 0
 	var building_angles = []
+	var building_types = ["Gym","Firing Range","Bar"]
+	
 	for i in range(num_buildings):
 		var angle_vary = rng.randf_range(-0.3,0.3)
 		var cur_angle = i*angle_inc + angle_vary

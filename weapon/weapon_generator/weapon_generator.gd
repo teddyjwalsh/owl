@@ -18,6 +18,19 @@ func gen(in_name):
 		weapons["Sniper"].animation = "rifle"
 		return weapons["Sniper"]
 		
+	if in_name == "Shotgun":
+		weapons["Shotgun"] = weapon_scene.instantiate()
+		weapons["Shotgun"].projectile_speed = 100
+		weapons["Shotgun"].base_damage = 15
+		weapons["Shotgun"].range = 30
+		weapons["Shotgun"].weight = 10
+		weapons["Shotgun"].base_attack_speed = 40
+		weapons["Shotgun"].weapon_name = "Shotgun"
+		weapons["Shotgun"].weapon_type = 1
+		weapons["Shotgun"].animation = "rifle"
+		weapons["Shotgun"].hit_chance_multiplier = 2.0
+		return weapons["Shotgun"]
+		
 	if in_name == "Long Bow":
 		weapons["Long Bow"] = weapon_scene.instantiate()
 		weapons["Long Bow"].projectile_speed = 50
@@ -52,6 +65,17 @@ func gen(in_name):
 		weapons["Battle Axe"].weapon_type = 0
 		weapons["Battle Axe"].animation = "axe"
 		return weapons["Battle Axe"]
+		
+	if in_name == "Short Sword":
+		weapons["Short Sword"] = weapon_scene.instantiate()
+		weapons["Short Sword"].base_damage = 10
+		weapons["Short Sword"].range = 4
+		weapons["Short Sword"].weight = 8
+		weapons["Short Sword"].base_attack_speed = 70
+		weapons["Short Sword"].weapon_name = "Battle Axe"
+		weapons["Short Sword"].weapon_type = 0
+		weapons["Short Sword"].animation = "axe"
+		return weapons["Short Sword"]
 	
 	if in_name == "Dagger":
 		weapons["Dagger"] = weapon_scene.instantiate()

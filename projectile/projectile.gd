@@ -37,7 +37,7 @@ func _process(delta):
 func calculate_miss_chance(in_attacker, in_enemy, in_weapon):
 	var vec = in_enemy.global_transform.origin - in_attacker.global_transform.origin
 	var dist = vec.length()
-	var hit_chance = (-sigmoid(in_attacker.traits.get_aim()*in_enemy.traits.get_size()*0.1*(dist - in_weapon.range*1.1)) + 1)
+	var hit_chance = (-sigmoid(in_weapon.hit_chance_multiplier*in_attacker.traits.get_aim()*in_enemy.traits.get_size()*0.1*(dist - in_weapon.range*1.1)) + 1)
 	return 1 - hit_chance
 	
 func spawn_miss(pos):

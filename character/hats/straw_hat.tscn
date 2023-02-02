@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://m517c00sdxv4"]
+
+[ext_resource type="PackedScene" uid="uid://74u7assde713" path="res://models/straw_hat.glb" id="1_7wtb3"]
+
+[node name="straw_hat" instance=ExtResource("1_7wtb3")]

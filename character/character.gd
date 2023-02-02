@@ -1,6 +1,7 @@
 extends Node
 
 var char_model_scene = preload("res://character_model.tscn")
+var hat_scene = preload("res://character/hats/straw_hat.tscn")
 var blood_scene = preload("res://character/effects/blood/blood.tscn")
 @onready var traits = get_node("traits")
 @onready var controller = get_node("controller")
@@ -26,6 +27,7 @@ func _ready():
 	chmod.name = "character_model2"
 	chmod.rotate_object_local(Vector3(0,1,0),PI)
 	chmod.scale = Vector3(0.45,0.45,0.45)
+	
 	add_child(chmod)
 	$character_model2/AnimationPlayer.set_blend_time("idle", "run", 0.2)
 	$character_model2/AnimationPlayer.set_blend_time("run", "idle", 0.2)
@@ -35,6 +37,13 @@ func _ready():
 	$character_model2/AnimationPlayer.set_blend_time("axe", "idle", 1.0)
 	$character_model2/AnimationPlayer.set_blend_time("bow", "idle", 1.0)
 	$character_model2/AnimationPlayer.set_blend_time("bow", "run", 1.0)
+	
+	var straw_hat = hat_scene.instantiate()
+	straw_hat.transform.origin.y += 0.4
+	var bone_attach = BoneAttachment3D.new()
+	$character_model2/Armature/Skeleton3D.add_child(bone_attach)
+	bone_attach.set_bone_name("head")
+	bone_attach.add_child(straw_hat)
 
 func get_movespeed():
 	return 50

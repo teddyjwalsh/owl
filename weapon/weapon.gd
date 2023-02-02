@@ -14,6 +14,7 @@ var weapon_name = "default"
 var weapon_type = 0 # 0 is melee, ranged is 1
 var firer = null
 var animation = "axe"
+var hit_chance_multiplier = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

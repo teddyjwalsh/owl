@@ -6,9 +6,10 @@ var units_enter_time = {}
 
 var gym_scene = preload("res://models/gym.glb")
 var firing_range_scene = preload("res://models/firing_range.glb")
+var bar_scene = preload("res://models/bar.glb")
 var building_mat = preload("res://town/building/building.tres")
 
-var building_types = ["Gym","Firing Range"]
+var building_types = ["Gym","Firing Range","Bar"]
 var stat_dict = {"Gym": {"strength": 0.01, "agility": 0.01, "stamina": 0.01}, \
 		"Firing Range":{"aim": 0.01, "patience": 0.01, "dexterity": 0.01}, \
 		"University":{"intelligence": 0.01, "patience": 0.01, "pride": -0.01}, \
@@ -26,7 +27,7 @@ func _ready():
 	building_type = building_types[rng.randi_range(0,building_types.size()-1)]
 	if building_type == "Gym":
 		var gym = gym_scene.instantiate()
-		gym.get_node("lettering").set_surface_override_material(0,building_mat)
+		#gym.get_node("lettering").set_surface_override_material(0,building_mat)
 		gym.scale = Vector3(0.6,0.6,0.6)
 		add_child(gym)
 		$Area3D.connect("body_entered",Callable(self,"_door_entered"))
@@ -39,6 +40,13 @@ func _ready():
 		$Area3D.connect("body_entered",Callable(self,"_door_entered"))
 		$Area3D.global_transform.origin = firing_range.get_node("door").global_transform.origin
 		mesh_node = firing_range
+	elif building_type == "Bar":
+		var bar = bar_scene.instantiate()
+		bar.scale = Vector3(0.6,0.6,0.6)
+		add_child(bar)
+		$Area3D.connect("body_entered",Callable(self,"_door_entered"))
+		$Area3D.global_transform.origin = bar.get_node("door").global_transform.origin
+		mesh_node = bar
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

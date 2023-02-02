@@ -23,6 +23,7 @@ var intelligence = 1.0
 var ideal_temperature = 72
 var temper = 1.0
 var aim = 1.0
+var health_regen = 0.1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -149,3 +150,4 @@ func learn(delta, in_stat):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	add_energy(delta*get_energy_regen()*2)
+	add_health(delta*health_regen)
