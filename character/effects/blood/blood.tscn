@@ -3,19 +3,19 @@
 [ext_resource type="Shader" path="res://character/effects/blood/blood.gdshader" id="1_6widn"]
 [ext_resource type="Script" path="res://character/effects/blood/blood.gd" id="1_8s320"]
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qiei5"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0pwe2"]
 spread = 22.37
 initial_velocity_min = 5.69
 initial_velocity_max = 14.11
 scale_min = 0.04
 scale_max = 0.14
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pa44s"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjfdp"]
 render_priority = 0
 shader = ExtResource("1_6widn")
 
-[sub_resource type="SphereMesh" id="SphereMesh_n7non"]
-material = SubResource("ShaderMaterial_pa44s")
+[sub_resource type="SphereMesh" id="SphereMesh_ex3t5"]
+material = SubResource("ShaderMaterial_pjfdp")
 
 [node name="blood" type="Node3D"]
 script = ExtResource("1_8s320")
@@ -23,5 +23,5 @@ script = ExtResource("1_8s320")
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 amount = 63
 lifetime = 0.32
-process_material = SubResource("ParticleProcessMaterial_qiei5")
-draw_pass_1 = SubResource("SphereMesh_n7non")
+process_material = SubResource("ParticleProcessMaterial_0pwe2")
+draw_pass_1 = SubResource("SphereMesh_ex3t5")

@@ -16,6 +16,7 @@ func gen(in_name):
 		weapons["Sniper"].weapon_name = "Sniper"
 		weapons["Sniper"].weapon_type = 1
 		weapons["Sniper"].animation = "rifle"
+		weapons["Sniper"].model_name = "rifle"
 		return weapons["Sniper"]
 		
 	if in_name == "Shotgun":
@@ -27,6 +28,7 @@ func gen(in_name):
 		weapons["Shotgun"].base_attack_speed = 40
 		weapons["Shotgun"].weapon_name = "Shotgun"
 		weapons["Shotgun"].weapon_type = 1
+		weapons["Shotgun"].model_name = "shotgun"
 		weapons["Shotgun"].animation = "rifle"
 		weapons["Shotgun"].hit_chance_multiplier = 2.0
 		return weapons["Shotgun"]
@@ -41,6 +43,7 @@ func gen(in_name):
 		weapons["Long Bow"].weapon_name = "Long Bow"
 		weapons["Long Bow"].weapon_type = 1
 		weapons["Long Bow"].animation = "bow"
+		weapons["Long Bow"].model_name = "bow"
 		return weapons["Long Bow"]
 	
 	if in_name == "Revolver":
@@ -52,8 +55,21 @@ func gen(in_name):
 		new_weap.base_attack_speed = 60
 		new_weap.weapon_name = "Revolver"
 		new_weap.weapon_type = 1
+		new_weap.model_name = "sniper"
 		new_weap.animation = "rifle"
 		return new_weap
+		
+	if in_name == "Hammer":
+		weapons["Hammer"] = weapon_scene.instantiate()
+		weapons["Hammer"].base_damage = 30
+		weapons["Hammer"].range = 5
+		weapons["Hammer"].weight = 20
+		weapons["Hammer"].base_attack_speed = 30
+		weapons["Hammer"].weapon_name = "Hammer"
+		weapons["Hammer"].weapon_type = 0
+		weapons["Hammer"].model_name = "hammer"
+		weapons["Hammer"].animation = "axe"
+		return weapons["Hammer"]
 	
 	if in_name == "Battle Axe":
 		weapons["Battle Axe"] = weapon_scene.instantiate()
@@ -63,6 +79,7 @@ func gen(in_name):
 		weapons["Battle Axe"].base_attack_speed = 50
 		weapons["Battle Axe"].weapon_name = "Battle Axe"
 		weapons["Battle Axe"].weapon_type = 0
+		weapons["Battle Axe"].model_name = "axe"
 		weapons["Battle Axe"].animation = "axe"
 		return weapons["Battle Axe"]
 		
@@ -74,6 +91,7 @@ func gen(in_name):
 		weapons["Short Sword"].base_attack_speed = 70
 		weapons["Short Sword"].weapon_name = "Battle Axe"
 		weapons["Short Sword"].weapon_type = 0
+		weapons["Short Sword"].model_name = "axe"
 		weapons["Short Sword"].animation = "axe"
 		return weapons["Short Sword"]
 	
@@ -84,6 +102,7 @@ func gen(in_name):
 		weapons["Dagger"].weight = 2
 		weapons["Dagger"].base_attack_speed = 150
 		weapons["Dagger"].weapon_name = "Dagger"
+		weapons["Dagger"].model_name = "weapon_model"
 		weapons["Dagger"].weapon_type = 0
 		weapons["Dagger"].animation = "axe"
 		return weapons["Dagger"]

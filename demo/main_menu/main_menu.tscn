@@ -1,21 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://di4kr5aw23e5v"]
 
-[ext_resource path="res://demo/main_menu/main_menu.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://demo/main_menu/main_menu.gd" id="1"]
 
 [node name="main_menu" type="CenterContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="Panel" type="Panel" parent="."]
-offset_left = 512.0
-offset_top = 300.0
-offset_right = 512.0
-offset_bottom = 300.0
+layout_mode = 2
 
 [node name="start_game" type="Button" parent="."]
-offset_left = 470.0
-offset_top = 290.0
-offset_right = 553.0
-offset_bottom = 310.0
+layout_mode = 2
 text = "Start Game"

@@ -1,5 +1,6 @@
 extends Node3D
 
+@onready var battle_queue = get_node("/root/BattleQueue")
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -8,15 +9,18 @@ var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$MarginContainer/Button.connect("pressed",Callable(self,"_on_join_battle_presss"))
+	$MarginContainer/Button.connect("pressed",_on_join_battle_press)
+	
+func load_in(in_team):
+	load_team(in_team)
 
-func load_team():
+func load_team(in_team):
 	var radius = 4.0
 	var spawn_pos = Vector3(0,0,0)
 	var unit_num = 0
 	var bio_width = 200
 	var margin = 20
-	for unit in get_parent().units:
+	for unit in in_team.units:
 		var panel = Panel.new()
 		var label = RichTextLabel.new()
 		panel.add_child(label)
@@ -38,7 +42,9 @@ func load_team():
 	$Camera3D.make_current()
 	$Camera3D.global_transform.origin = Vector3(5,3,5)
 	$Camera3D.look_at(spawn_pos, Vector3(0,1,0))
-	
+ 
+func _on_join_battle_press():
+	battle_queue.next()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

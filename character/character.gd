@@ -2,6 +2,8 @@ extends Node
 
 var char_model_scene = preload("res://character_model.tscn")
 var hat_scene = preload("res://character/hats/straw_hat.tscn")
+var viking_hat_scene = preload("res://character/hats/viking_hat.tscn")
+var beanie_scene = preload("res://character/hats/beanie.tscn")
 var blood_scene = preload("res://character/effects/blood/blood.tscn")
 @onready var traits = get_node("traits")
 @onready var controller = get_node("controller")
@@ -16,17 +18,20 @@ var full_name = "default"
 var rng = RandomNumberGenerator.new()
 var color = null
 var targeted = false
+var chmod = null
+var default_model_scale = Vector3(0.45,0.45,0.45)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var hat_scenes = [hat_scene, viking_hat_scene, beanie_scene]
 	traits = get_node("traits")
 	full_name = name_gen.gen_full_names(1)[0]
 	full_name = full_name[0] + " " + full_name[1]
 	print(full_name)
-	var chmod = char_model_scene.instantiate()
+	chmod = char_model_scene.instantiate()
 	chmod.name = "character_model2"
 	chmod.rotate_object_local(Vector3(0,1,0),PI)
-	chmod.scale = Vector3(0.45,0.45,0.45)
+	chmod.scale = default_model_scale
 	
 	add_child(chmod)
 	$character_model2/AnimationPlayer.set_blend_time("idle", "run", 0.2)
@@ -38,7 +43,7 @@ func _ready():
 	$character_model2/AnimationPlayer.set_blend_time("bow", "idle", 1.0)
 	$character_model2/AnimationPlayer.set_blend_time("bow", "run", 1.0)
 	
-	var straw_hat = hat_scene.instantiate()
+	var straw_hat = hat_scenes[rng.randi_range(0,hat_scenes.size()-1)].instantiate()
 	straw_hat.transform.origin.y += 0.4
 	var bone_attach = BoneAttachment3D.new()
 	$character_model2/Armature/Skeleton3D.add_child(bone_attach)
@@ -62,14 +67,35 @@ func _process(delta):
 		$target_indicator.visible = true
 	else:
 		$target_indicator.visible = false
+	if controller.dead:
+		$CollisionShape3D.disabled = true
+		$unit_info.visible = false
+	var cur_size = pow(traits.get_size(),0.4)
+	$character_model2.scale = cur_size*Vector3(default_model_scale.x,default_model_scale.y*cur_size,default_model_scale.z)
 	
 func set_color(in_color):
 	var new_mat = $character_model2/Armature/Skeleton3D/Cube.get_active_material(0).duplicate()
 	new_mat.albedo_color = in_color
 	$character_model2/Armature/Skeleton3D/Cube.set_surface_override_material(0, new_mat)
 	
+func set_teammate_color(in_color):
+	$highlight.set_instance_shader_parameter("color", in_color)
+	$highlight/cylinder.set_instance_shader_parameter("color", in_color)
+	
 func on_hit(direction):
 	var blood_instance = blood_scene.instantiate()
 	$character_model2/Armature/Skeleton3D/blood_attach.add_child(blood_instance)
 	blood_instance.get_node("GPUParticles3D").process_material.direction = -direction
 	
+func unequip():
+	inventory.weapon_slot.firer = null
+	inventory.weapon_slot = null
+
+func equip(in_weapon):
+	if in_weapon.firer != null:
+		in_weapon.firer.inventory.weapon_slot = null
+		in_weapon.firer = null
+	if inventory.weapon_slot != null:
+		inventory.weapon_slot.firer = null
+	inventory.weapon_slot = in_weapon
+	in_weapon.firer = self

@@ -23,20 +23,18 @@ var intelligence = 1.0
 var ideal_temperature = 72
 var temper = 1.0
 var aim = 1.0
-var health_regen = 0.1
+var health_regen = 0.0
+
+func init():
+	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var mean = 1.0
-	var dev = 0.5
-	rng.randomize()	
-	strength = rng.randfn(mean, dev)
+	var dev = 0.2
 	gen_trait_value("strength", mean, dev)
-	stamina = rng.randfn(100, 20)
 	gen_trait_value("stamina", 100, 20)
-	base_size = rng.randfn(mean, dev)
 	gen_trait_value("base_size", mean, dev)
-	#energy_regen = rng.randfn(mean, dev)
 	gen_trait_value("agility", mean, dev)
 	gen_trait_value("dexterity", mean, dev)
 	gen_trait_value("friendliness", mean, dev)
@@ -45,22 +43,11 @@ func _ready():
 	gen_trait_value("anxiety", mean, dev)
 	gen_trait_value("observation", mean, dev)
 	gen_trait_value("magic", mean, dev)
-	gen_trait_value("age", 28, 10)
+	gen_trait_value("age", 28, 4)
 	gen_trait_value("intelligence", mean, dev)
 	gen_trait_value("aim", mean, dev)
 	gen_trait_value("temper", mean, dev)
-	gen_trait_value("ideal_temperature", 72, 20)
-	#dexterity = rng.randfn(mean, dev)
-	#friendliness = rng.randfn(mean, dev)
-	#patience = rng.randfn(mean, dev)
-	#pride = rng.randfn(mean, dev)
-	#anxiety = rng.randfn(mean, dev)
-	#observation = rng.randfn(mean, dev)
-	#magic = rng.randfn(0.5, dev)
-	#age = rng.randfn(28, 10)
-	#intelligence = rng.randfn(mean, dev)
-	#temper = rng.randfn(mean, dev)
-	#ideal_temperature = rng.randfn(72, 20)
+	gen_trait_value("ideal_temperature", 72, 10)
 	
 func set_trait_value(in_trait, in_val):
 	self.set(in_trait, max(0.1, in_val))

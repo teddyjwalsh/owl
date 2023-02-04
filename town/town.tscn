@@ -3,12 +3,12 @@
 [ext_resource type="Script" path="res://town/town.gd" id="1_qcms6"]
 [ext_resource type="Environment" uid="uid://bowq55mgk0tl2" path="res://town/town_env.tres" id="2_0b2h3"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_813cx"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_pxthy"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qtsna"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_qp1a7"]
 size = Vector3(200, 1, 200)
 
-[sub_resource type="BoxMesh" id="BoxMesh_4r88y"]
+[sub_resource type="BoxMesh" id="BoxMesh_rupon"]
 
 [node name="town" type="Node3D"]
 script = ExtResource("1_qcms6")
@@ -26,17 +26,20 @@ light_energy = 1.394
 light_indirect_energy = 7.091
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_813cx")
+navigation_mesh = SubResource("NavigationMesh_pxthy")
 
 [node name="ground" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/ground"]
-shape = SubResource("BoxShape3D_qtsna")
+shape = SubResource("BoxShape3D_qp1a7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/ground"]
 transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, 0, 0, 0)
-mesh = SubResource("BoxMesh_4r88y")
+mesh = SubResource("BoxMesh_rupon")
 skeleton = NodePath("../../..")
 
 [node name="path" type="MeshInstance3D" parent="."]
+
+[node name="to_equip" type="Button" parent="."]
+text = "To Equip"

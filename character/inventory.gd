@@ -19,7 +19,7 @@ func get_equipment_size_coefficient():
 	
 func set_weapon(in_weapon):
 	weapon_slot = in_weapon
-	add_child(weapon_slot)
+	#add_child(weapon_slot)
 	weapon_slot.owner = owner
 	weapon_slot.firer = get_parent()
 

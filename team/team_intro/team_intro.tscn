@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://team/team_intro/team_intro.gd" id="1"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_x72uc"]
+[sub_resource type="BoxMesh" id="BoxMesh_q3lhd"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_emkvn"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_422py"]
 
 [node name="team_intro" type="Node3D"]
 script = ExtResource("1")
@@ -13,11 +13,11 @@ script = ExtResource("1")
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, -1, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ground"]
-mesh = SubResource("BoxMesh_x72uc")
+mesh = SubResource("BoxMesh_q3lhd")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ground"]
-shape = SubResource("BoxShape3D_emkvn")
+shape = SubResource("BoxShape3D_422py")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 

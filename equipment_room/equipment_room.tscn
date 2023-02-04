@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://d3hbvory3vab4"]
+
+[ext_resource type="Script" path="res://equipment_room/equipment_room.gd" id="1_28qtv"]
+[ext_resource type="Script" path="res://equipment_room/ScrollContainer.gd" id="2_fh2uf"]
+[ext_resource type="PackedScene" uid="uid://b7rucskwfdcn1" path="res://weapon/weapons/sniper.tscn" id="3_fvrc2"]
+[ext_resource type="PackedScene" uid="uid://donfhwyeswmy7" path="res://weapon/weapons/axe.tscn" id="4_os2vr"]
+[ext_resource type="PackedScene" uid="uid://um5xuktqrb5p" path="res://weapon/weapons/bow.tscn" id="5_2thcg"]
+[ext_resource type="PackedScene" uid="uid://cmiy07nndy5a7" path="res://weapon/weapons/hammer.tscn" id="6_p8tvm"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pq148"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3my5s"]
+size = Vector3(100, 1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aj7kc"]
+
+[node name="equipment_room" type="Node2D"]
+script = ExtResource("1_28qtv")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+clip_contents = false
+offset_right = 1149.0
+offset_bottom = 535.0
+size_flags_horizontal = 0
+script = ExtResource("2_fh2uf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+alignment = 1
+
+[node name="drag_models" type="Node3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+
+[node name="weapon_model" type="MeshInstance3D" parent="drag_models"]
+transform = Transform3D(0.2, 0, 0, 0, 5.161, 0, 0, 0, 0.2, 0, 1.299, 0)
+visible = false
+mesh = SubResource("BoxMesh_pq148")
+
+[node name="sniper" parent="drag_models" instance=ExtResource("3_fvrc2")]
+visible = false
+
+[node name="axe" parent="drag_models" instance=ExtResource("4_os2vr")]
+visible = false
+
+[node name="bow" parent="drag_models" instance=ExtResource("5_2thcg")]
+visible = false
+
+[node name="hammer" parent="drag_models" instance=ExtResource("6_p8tvm")]
+visible = false
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_3my5s")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("BoxShape3D_aj7kc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7237, 11.0768)
+
+[node name="to_battle" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "To Battle"

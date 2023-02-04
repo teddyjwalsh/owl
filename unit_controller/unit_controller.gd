@@ -13,6 +13,7 @@ var team_scene = preload("res://team/team.tscn")
 var main_team = null
 var selected_unit = null
 var targeted_unit = null
+var is_human_controlled = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,6 +29,7 @@ func set_human_control():
 	self.get_node("/root/HumanInput").connect("stop",Callable(self,"_stop"))
 	self.get_node("/root/HumanInput").connect("unit_hovered",Callable(self,"_unit_hovered"))
 	self.get_node("/root/HumanInput").connect("non_unit_hovered",Callable(self,"_non_unit_hovered"))
+	is_human_controlled = true
 
 func set_command_selected(in_command):
 	print("setggggg")
@@ -84,9 +86,9 @@ func _unit_right_clicked(target, shift):
 
 func _stop(shift):
 	if shift:
-		queue_command_selected({"type": "IDLE"})
+		queue_command_selected({"type": "STOP"})
 	else:
-		set_command_selected({"type": "IDLE"})
+		set_command_selected({"type": "STOP"})
 
 func _unit_selected(unit_index):
 	if unit_index < main_team.units.size():
@@ -94,9 +96,11 @@ func _unit_selected(unit_index):
 		
 func _process(delta):
 	for unit in main_team.units:
-		unit.select_indicator.visible = false
-	if selected_unit != null:
-		selected_unit.select_indicator.visible = true
+		unit.select_indicator.get_node("cylinder").visible = false
+		if !is_human_controlled:
+			unit.select_indicator.visible = false
+	if selected_unit != null and is_human_controlled:
+		selected_unit.select_indicator.get_node("cylinder").visible = true
 		
 func give_team(in_team):
 	main_team = in_team

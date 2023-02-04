@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://44fuq1vusncd"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_oqf0y"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_aeg7s"]
 height = 1.0
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_t8jkl"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_no7yg"]
 
 [node name="solid_object" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 3, 0, 0, 0, 10, 0, 1.5, 0)
-mesh = SubResource("CylinderMesh_oqf0y")
+mesh = SubResource("CylinderMesh_aeg7s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 1.5, 0, 0, 0, 10, 0, 1.5, 0)
-shape = SubResource("CylinderShape3D_t8jkl")
+shape = SubResource("CylinderShape3D_no7yg")

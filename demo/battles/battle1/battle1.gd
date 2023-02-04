@@ -10,56 +10,79 @@ var rng = RandomNumberGenerator.new()
 var team = null
 var enemy_ai = null
 @onready var wg = get_node("/root/WeaponGenerator")
+@onready var battle_queue = get_node("/root/BattleQueue")
 
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
 
-func generate_demo_warrior():
-	rng.randomize()
+func generate_demo_warrior(in_team):
 	var new_unit = character_scene.instantiate()
+	in_team.add_unit(new_unit)
+	new_unit.traits.init()
 	new_unit.get_node("traits").strength = rng.randfn(1.5, 0.25)
 	new_unit.get_node("traits").pride = rng.randfn(1.3, 0.25)
 	new_unit.get_node("traits").anxiety = rng.randfn(0.7, 0.25)
 	new_unit.get_node("traits").patience = rng.randfn(0.9, 0.25)
 	new_unit.get_node("traits").stamina = rng.randfn(110, 20)
-	new_unit.get_node("inventory").set_weapon(wg.gen("Battle Axe"))
-	return new_unit
+	var new_weap = wg.gen("Battle Axe")
+	new_unit.get_node("inventory").set_weapon(new_weap)
+	in_team.inventory.append(new_weap)
+	in_team.add_child(new_weap)
+	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*0.3
+	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*0.3
 	
-func generate_demo_archer():
-	rng.randomize()
+func generate_demo_archer(in_team):
 	var new_unit = character_scene.instantiate()
+	in_team.add_unit(new_unit)
+	new_unit.traits.init()
 	print(new_unit.traits)
 	new_unit.get_node("traits").agility = rng.randfn(1.5, 0.25)
 	new_unit.get_node("traits").dexterity = rng.randfn(1.3, 0.25)
 	new_unit.get_node("traits").patience = rng.randfn(1.2, 0.25)
 	new_unit.get_node("traits").stamina = rng.randfn(90, 20)
 	new_unit.get_node("traits").observation = rng.randfn(1.2, 0.25)
-	new_unit.get_node("inventory").set_weapon(wg.gen("Long Bow"))
+	var new_weap = wg.gen("Long Bow")
+	new_unit.get_node("inventory").set_weapon(new_weap)
+	in_team.inventory.append(new_weap)
+	in_team.add_child(new_weap)
+	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*0.3
+	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*0.3
 	return new_unit
 	
-func generate_demo_mage():
-	rng.randomize()
+func generate_demo_mage(in_team):
 	var new_unit = character_scene.instantiate()
+	in_team.add_unit(new_unit)
+	new_unit.traits.init()
 	new_unit.get_node("traits").magic = rng.randfn(1.2, 0.25)
 	new_unit.get_node("traits").age = rng.randfn(35, 10)
 	new_unit.get_node("traits").patience = rng.randfn(1.3, 0.25)
 	new_unit.get_node("traits").observation = rng.randfn(1.4, 0.25)
 	new_unit.get_node("traits").intelligence = rng.randfn(1.4, 0.25)
-	new_unit.get_node("inventory").set_weapon(wg.gen("Revolver"))
+	var new_weap = wg.gen("Revolver")
+	new_unit.get_node("inventory").set_weapon(new_weap)
+	in_team.inventory.append(new_weap)
+	in_team.add_child(new_weap)
+	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*0.3
+	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*0.3
 	return new_unit
 	
-func generate_demo_monk():
-	rng.randomize()
+func generate_demo_monk(in_team):
 	var new_unit = character_scene.instantiate()
+	in_team.add_unit(new_unit)
+	new_unit.traits.init()
 	new_unit.get_node("traits").age = rng.randfn(35, 10)
 	new_unit.get_node("traits").patience = rng.randfn(1.8, 0.25)
 	new_unit.get_node("traits").observation = rng.randfn(1.4, 0.25)
 	new_unit.get_node("traits").intelligence = rng.randfn(1.4, 0.25)
 	new_unit.get_node("traits").anxiety = rng.randfn(0.25, 0.25)
 	new_unit.get_node("traits").temper = rng.randfn(0.1, 0.01)
-	new_unit.get_node("inventory").set_weapon(wg.gen("Dagger"))
-	
+	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*0.3
+	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*0.3
+	var new_weap = wg.gen("Dagger")
+	new_unit.get_node("inventory").set_weapon(new_weap)
+	in_team.inventory.append(new_weap)
+	in_team.add_child(new_weap)
 	return new_unit
 	
 	
@@ -69,12 +92,13 @@ func generate_demo_team():
 	add_child(enemy_team)
 	var unit_controller = enemy_team.uc
 	unit_controller.main_team.team_number = 2
-	unit_controller.main_team.add_unit(generate_demo_archer())
-	unit_controller.main_team.add_unit(generate_demo_warrior())
-	unit_controller.main_team.add_unit(generate_demo_mage())
-	unit_controller.main_team.add_unit(generate_demo_monk())
+	
+	generate_demo_warrior(unit_controller.main_team)
+	#generate_demo_mage(unit_controller.main_team)
+	#generate_demo_monk(unit_controller.main_team)
+	generate_demo_archer(unit_controller.main_team)
 	for unit in unit_controller.main_team.units:
-		unit.controller.dead = true
+		#unit.controller.dead = true
 		unit.get_node("controller").current_line.visible = false
 	team = unit_controller.main_team
 
@@ -98,5 +122,7 @@ func load_in(in_player_team):
 	map.load_team(team,2)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	if map.winner != null:
+		if map.winner == 1:
+			battle_queue.next()

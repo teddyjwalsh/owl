@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://df1gbm27gqetf"]
+
+[ext_resource type="PackedScene" uid="uid://dbgof24jcifu8" path="res://models/viking_hat.glb" id="1_jcwyg"]
+
+[node name="viking_hat" instance=ExtResource("1_jcwyg")]

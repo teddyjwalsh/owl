@@ -6,7 +6,7 @@ uniform sampler2D noise;
 uniform float angle = -0.3;
 uniform float position = -0.2;
 uniform float spread : hint_range(0.0, 1.0) = 0.5;
-uniform vec3 color;
+instance uniform vec3 color;
 
 varying vec3 vtx;
 

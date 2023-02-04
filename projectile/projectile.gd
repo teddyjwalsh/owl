@@ -1,6 +1,7 @@
 extends Node3D
 
 var miss_scene = preload("res://indicators/miss_indicator/miss_indicator.tscn")
+var hit_effect_scene = preload("res://projectile/hit_effect.tscn")
 
 var is_homing = true
 var target = null
@@ -10,6 +11,7 @@ var weapon = null
 var firer = null
 var friendly_fire = false
 var imm_mesh = null
+var norm_dir = Vector3(1,0,0)
 
 var last_positions = []
 var max_history = 20
@@ -24,15 +26,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if is_homing:
+	if is_homing and target != null:
 		var dir = (target.global_transform.origin  + Vector3(0,4,0) - global_transform.origin)
-		var norm_dir = dir.normalized()
+		norm_dir = dir.normalized()
 		var dist = dir.length()
 		global_transform.origin += norm_dir*delta*speed
 		#look_at(target.global_transform.origin)
 		last_positions.push_front(global_transform.origin)
 		if last_positions.size() > max_history:
 			last_positions.pop_back()
+	if target == null or target.controller.dead:
+		queue_free()
 		
 func calculate_miss_chance(in_attacker, in_enemy, in_weapon):
 	var vec = in_enemy.global_transform.origin - in_attacker.global_transform.origin
@@ -57,6 +61,11 @@ func body_entered(body):
 					body.traits.add_health(-damage)
 				else:
 					spawn_miss(global_transform.origin)
+				var hit_effect = hit_effect_scene.instantiate()
+				get_tree().get_root().add_child(hit_effect)
+				hit_effect.global_transform.origin = global_transform.origin
+				hit_effect.look_at(global_transform.origin + norm_dir)
+				#hit_effect.get_node("hit_effect").process_material.direction = norm_dir
 				queue_free()
 	elif body.get_class() == "StaticBody3D":
 		queue_free()

@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgy27hhvjxqtf"]
+
+[ext_resource type="Script" path="res://equipment_room/weapon_drag.gd" id="1_yk6oy"]
+
+[node name="weapon_drag" type="PanelContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 100)
+layout_direction = 1
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="weapon_drag_text" type="RichTextLabel" parent="."]
+layout_mode = 2
+bbcode_enabled = true
+script = ExtResource("1_yk6oy")

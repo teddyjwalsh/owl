@@ -62,14 +62,15 @@ func assess_state():
 	return state
 	
 func process_attack_command(target):
-	print("sdfsdfsdf")
-	has_attacked = false
-	get_parent().look_at(target.global_transform.origin, Vector3(0,1,0))
-	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
-	anim_player.play(get_parent().inventory.weapon_slot.animation)
-	attack_animation = anim_player.current_animation_length
-	
-	attack_target = target
+	if target != null:
+		print("sdfsdfsdf")
+		has_attacked = false
+		get_parent().look_at(target.global_transform.origin, Vector3(0,1,0))
+		var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
+		anim_player.play(get_parent().inventory.weapon_slot.animation)
+		get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "weapon"
+		attack_animation = anim_player.current_animation_length
+		attack_target = target
 	
 func process_attack(delta):
 	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
@@ -132,6 +133,7 @@ func _process(delta):
 		dead = true
 		var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")	
 		anim_player.play("death")
+		get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "back"
 		get_parent().get_node("unit_info").visible = false
 	
 func _physics_process(delta):
@@ -143,6 +145,7 @@ func _physics_process(delta):
 	elif state == "MOVE" or state == "RELOADING_MOVE":
 		if anim_player.current_animation != "run":
 			anim_player.play("run", -1, 2.0*ms)
+			get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "back"
 		var current_location = get_parent().global_transform.origin
 		var next_location = get_parent().nav.get_next_path_position()
 		var dir = (next_location - current_location)
@@ -158,6 +161,7 @@ func _physics_process(delta):
 	elif state != "DEAD":
 		if anim_player.current_animation != "idle":
 			anim_player.play("idle")
+			get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "weapon"
 		
 		
 	

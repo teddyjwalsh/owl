@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://um5xuktqrb5p"]
+
+[ext_resource type="PackedScene" uid="uid://00ue031x1lkb" path="res://models/bow.glb" id="1_lryu7"]
+
+[node name="bow" instance=ExtResource("1_lryu7")]

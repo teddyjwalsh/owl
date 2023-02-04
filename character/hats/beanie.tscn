@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://da6qa8yqjdsdc"]
+
+[ext_resource type="PackedScene" uid="uid://c1y601leuebf" path="res://models/beanie.glb" id="1_2jiyx"]
+
+[node name="beanie" instance=ExtResource("1_2jiyx")]

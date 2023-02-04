@@ -6,6 +6,10 @@ var spawn_radius = 10
 var spawn_pos = Vector3(0,0,0)
 var mesh = null
 var mat: StandardMaterial3D = StandardMaterial3D.new()
+var done = false
+var equipment_room_scene = preload("res://equipment_room/equipment_room.tscn")
+var team = null
+@onready var battle_queue = get_node("/root/BattleQueue")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +21,7 @@ func _ready():
 	#mat.cull_mode = mat.CULL_DISABLED
 	#$path.set_material_override(mat)
 	#mat.
+	$to_equip.connect("pressed", _to_equip_pressed)
 
 	mesh.clear_surfaces()
 	mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -60,7 +65,6 @@ func _ready():
 		last_radius = cur_radius
 		last_mult = max_rad_mult
 		
-		
 	mesh.surface_end()
 	$path.mesh = mesh
 	$Camera3D.position = Vector3(5,40,5)
@@ -68,16 +72,24 @@ func _ready():
 	
 	$NavigationRegion3D.bake_navigation_mesh()
 	
+func load_in(in_team):
+	load_team(in_team)
+	
 func load_team(in_team):
 	var radius = spawn_radius
 	for unit in in_team.units:
+		unit.controller.dead = false
 		rng.randomize()
 		var rand_radius = rng.randf_range(8.0, radius)
 		rng.randomize()
 		var rand_az = rng.randf_range(0, 2*PI)
 		var rand_pos = spawn_pos + Vector3(rand_radius*cos(rand_az),0.0,rand_radius*sin(rand_az))
 		unit.global_transform.origin = rand_pos
+	team = in_team
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+func _to_equip_pressed():
+	battle_queue.next()
