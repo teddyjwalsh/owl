@@ -15,6 +15,8 @@ func _ready():
 	pass
 
 func get_equipment_size_coefficient():
+	if weapon_slot != null:
+		return weapon_slot.size_coefficient()
 	return 1.0
 	
 func set_weapon(in_weapon):

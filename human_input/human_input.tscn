@@ -1,6 +1,24 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://b28bjme3qs7ac"]
 
-[ext_resource path="res://human_input/human_input.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://human_input/human_input.gd" id="1"]
+[ext_resource type="Script" path="res://human_input/drag_attack.gd" id="2_g8oc6"]
+[ext_resource type="Script" path="res://human_input/select_box_area.gd" id="3_8ty0k"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_xi2hu"]
+points = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 [node name="Node" type="Node3D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
+
+[node name="select_box" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+width = 1.0
+
+[node name="drag_attack" type="MeshInstance3D" parent="."]
+script = ExtResource("2_g8oc6")
+
+[node name="select_box_area" type="Area3D" parent="."]
+script = ExtResource("3_8ty0k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="select_box_area"]
+shape = SubResource("ConvexPolygonShape3D_xi2hu")

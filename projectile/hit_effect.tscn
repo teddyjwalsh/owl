@@ -3,36 +3,37 @@
 [ext_resource type="Shader" path="res://projectile/projectile_hit.gdshader" id="1_li5xs"]
 [ext_resource type="Script" path="res://projectile/hit_effect.gd" id="2_p16na"]
 
-[sub_resource type="Curve" id="Curve_uogwy"]
+[sub_resource type="Curve" id="Curve_r5chi"]
 min_value = -360.0
 max_value = 360.0
 _data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(1, -301.091), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_gynoh"]
-curve = SubResource("Curve_uogwy")
+[sub_resource type="CurveTexture" id="CurveTexture_ilxl7"]
+curve = SubResource("Curve_r5chi")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pdbgc"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_68a6v"]
 lifetime_randomness = 0.06
 particle_flag_align_y = true
 particle_flag_rotate_y = true
 particle_flag_disable_z = true
+direction = Vector3(1.31, 0, 0)
 spread = 5.42
 gravity = Vector3(0, 0, 0)
-initial_velocity_min = 1.24
-initial_velocity_max = 9.45
+initial_velocity_min = 1.65
+initial_velocity_max = 15.95
 angular_velocity_min = 456.24
 angular_velocity_max = 605.94
-angular_velocity_curve = SubResource("CurveTexture_gynoh")
+angular_velocity_curve = SubResource("CurveTexture_ilxl7")
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p47mc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hc04r"]
 render_priority = 0
 shader = ExtResource("1_li5xs")
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_co4dq"]
-material = SubResource("ShaderMaterial_p47mc")
+[sub_resource type="CylinderMesh" id="CylinderMesh_vj4hk"]
+material = SubResource("ShaderMaterial_hc04r")
 top_radius = 0.048
 bottom_radius = 0.043
 height = 0.189
@@ -43,13 +44,12 @@ rings = 1
 
 [node name="hit_effect" type="GPUParticles3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
-emitting = false
-amount = 15
+amount = 10
 lifetime = 0.29
 one_shot = true
 local_coords = true
 trail_enabled = true
 trail_lifetime = 0.86
-process_material = SubResource("ParticleProcessMaterial_pdbgc")
-draw_pass_1 = SubResource("CylinderMesh_co4dq")
+process_material = SubResource("ParticleProcessMaterial_68a6v")
+draw_pass_1 = SubResource("CylinderMesh_vj4hk")
 script = ExtResource("2_p16na")

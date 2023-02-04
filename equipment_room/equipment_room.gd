@@ -42,6 +42,7 @@ func load_team(in_team):
 	for unit in in_team.units:
 		var rand_pos = start_pos + Vector3(separation*i,0,0)
 		unit.global_transform.origin = rand_pos
+		unit.visible = true
 		i += 1
 	team = in_team
 	load_inventory()
@@ -57,7 +58,6 @@ func load_inventory():
 		drags[item] = weapon_drag
 		
 func _start_drag(item):
-	print("START DRAG", item.model_name)
 	$drag_models.get_node(item.model_name).visible = true
 	dragged_weapon = item
 

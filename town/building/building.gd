@@ -47,6 +47,18 @@ func _ready():
 		$Area3D.connect("body_entered",Callable(self,"_door_entered"))
 		$Area3D.global_transform.origin = bar.get_node("door").global_transform.origin
 		mesh_node = bar
+	var lamp = mesh_node.get_node("lamp")
+	if lamp != null:
+		var lamp_spot = lamp.global_transform.origin
+		var new_lamp = OmniLight3D.new()
+		add_child(new_lamp)
+		new_lamp.omni_range = 10
+		new_lamp.shadow_enabled = true
+		new_lamp.light_color = Color(1,0.8,0.6)
+		new_lamp.light_energy = 1
+		new_lamp.global_transform.origin = lamp_spot - Vector3(0,0.2,0)
+		
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -1,14 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://8dwismfrw0nb"]
+[gd_scene load_steps=13 format=3 uid="uid://8dwismfrw0nb"]
 
 [ext_resource type="Script" path="res://town/town.gd" id="1_qcms6"]
 [ext_resource type="Environment" uid="uid://bowq55mgk0tl2" path="res://town/town_env.tres" id="2_0b2h3"]
+[ext_resource type="Shader" path="res://town/ground.gdshader" id="3_18b07"]
+[ext_resource type="AudioStream" uid="uid://c4t45u5ml7gjp" path="res://sounds/543913__soundsexciting__bar-chatter.mp3" id="3_f8xrn"]
+[ext_resource type="AudioStream" uid="uid://bcekeysy1a43x" path="res://sounds/511683__tatianafeudal__church_sunrise.wav" id="4_762f3"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_pxthy"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_qpgsj"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qp1a7"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_u2xmg"]
+margin = 0.001
 size = Vector3(200, 1, 200)
 
-[sub_resource type="BoxMesh" id="BoxMesh_rupon"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ewmbv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tn3mj"]
+height = 1
+noise = SubResource("FastNoiseLite_ewmbv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_md13k"]
+render_priority = 0
+shader = ExtResource("3_18b07")
+shader_parameter/noise = SubResource("NoiseTexture2D_tn3mj")
+
+[sub_resource type="BoxMesh" id="BoxMesh_3odfg"]
+material = SubResource("ShaderMaterial_md13k")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_aw5em"]
+height = 23.744
+radial_segments = 5
 
 [node name="town" type="Node3D"]
 script = ExtResource("1_qcms6")
@@ -21,25 +41,55 @@ fov = 95.625
 environment = ExtResource("2_0b2h3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.999757, -0.0220418, -6.56898e-10, 0.0117039, -0.530856, 0.847382, -0.0186778, 0.847176, 0.530985, 0, 39.257, 0)
-light_energy = 1.394
+transform = Transform3D(-0.999757, -0.0220419, 7.7268e-08, -0.0217524, 0.986627, 0.161535, -0.00356061, 0.161496, -0.986867, 0, 39.257, 0)
+light_color = Color(0.192157, 0.635294, 0.894118, 1)
+light_energy = 0.205
 light_indirect_energy = 7.091
+shadow_bias = 0.0
+shadow_reverse_cull_face = true
+directional_shadow_mode = 0
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_pxthy")
+navigation_mesh = SubResource("NavigationMesh_qpgsj")
 
 [node name="ground" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/ground"]
-shape = SubResource("BoxShape3D_qp1a7")
+shape = SubResource("BoxShape3D_u2xmg")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/ground"]
 transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, 0, 0, 0)
-mesh = SubResource("BoxMesh_rupon")
+mesh = SubResource("BoxMesh_3odfg")
 skeleton = NodePath("../../..")
 
 [node name="path" type="MeshInstance3D" parent="."]
+visible = false
 
 [node name="to_equip" type="Button" parent="."]
 text = "To Equip"
+
+[node name="ambient_noise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_f8xrn")
+volume_db = -23.793
+
+[node name="ambient_noise2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_762f3")
+volume_db = 0.087
+
+[node name="select_box" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.7638, 0)
+light_color = Color(0.905882, 0.776471, 0.686275, 1)
+light_energy = 2.889
+light_indirect_energy = 2.705
+shadow_enabled = true
+omni_range = 68.5245
+omni_shadow_mode = 0
+
+[node name="lamppost" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_aw5em")

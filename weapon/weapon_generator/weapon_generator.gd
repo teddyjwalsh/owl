@@ -16,6 +16,7 @@ func gen(in_name):
 		weapons["Sniper"].weapon_name = "Sniper"
 		weapons["Sniper"].weapon_type = 1
 		weapons["Sniper"].animation = "rifle"
+		weapons["Sniper"].attack_sound_file = "res://sounds/522519__filmmakersmanual__gun-shots-from-a-long-distance-4.wav"
 		weapons["Sniper"].model_name = "rifle"
 		return weapons["Sniper"]
 		
@@ -30,6 +31,7 @@ func gen(in_name):
 		weapons["Shotgun"].weapon_type = 1
 		weapons["Shotgun"].model_name = "shotgun"
 		weapons["Shotgun"].animation = "rifle"
+		weapons["Shotgun"].attack_sound_file = "res://sounds/522519__filmmakersmanual__gun-shots-from-a-long-distance-4.wav"
 		weapons["Shotgun"].hit_chance_multiplier = 2.0
 		return weapons["Shotgun"]
 		
@@ -44,6 +46,7 @@ func gen(in_name):
 		weapons["Long Bow"].weapon_type = 1
 		weapons["Long Bow"].animation = "bow"
 		weapons["Long Bow"].model_name = "bow"
+		weapons["Long Bow"].attack_sound_file = "res://sounds/384915__ali_6868__bow-release-bow-and-arrow.wav"
 		return weapons["Long Bow"]
 	
 	if in_name == "Revolver":
@@ -57,6 +60,7 @@ func gen(in_name):
 		new_weap.weapon_type = 1
 		new_weap.model_name = "sniper"
 		new_weap.animation = "rifle"
+		new_weap.attack_sound_file = "res://sounds/522519__filmmakersmanual__gun-shots-from-a-long-distance-4.wav"
 		return new_weap
 		
 	if in_name == "Hammer":
@@ -76,7 +80,7 @@ func gen(in_name):
 		weapons["Battle Axe"].base_damage = 20
 		weapons["Battle Axe"].range = 5
 		weapons["Battle Axe"].weight = 15
-		weapons["Battle Axe"].base_attack_speed = 50
+		weapons["Battle Axe"].base_attack_speed = 40
 		weapons["Battle Axe"].weapon_name = "Battle Axe"
 		weapons["Battle Axe"].weapon_type = 0
 		weapons["Battle Axe"].model_name = "axe"

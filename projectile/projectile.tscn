@@ -3,14 +3,14 @@
 [ext_resource type="Script" path="res://projectile/projectile.gd" id="1"]
 [ext_resource type="Script" path="res://projectile/MeshInstance3D3.gd" id="3_ctwbo"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_cufx7"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_jrpfv"]
 radius = 0.563
 
 [node name="projectile" type="Area3D"]
 script = ExtResource("1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_cufx7")
+shape = SubResource("SphereShape3D_jrpfv")
 
 [node name="trail" type="MeshInstance3D" parent="."]
 script = ExtResource("3_ctwbo")

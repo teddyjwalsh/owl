@@ -29,14 +29,13 @@ func generate_demo_warrior(in_team):
 	new_unit.get_node("inventory").set_weapon(new_weap)
 	in_team.inventory.append(new_weap)
 	in_team.add_child(new_weap)
-	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*0.3
-	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*0.3
+	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*2.0
+	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*1.0
 	
 func generate_demo_archer(in_team):
 	var new_unit = character_scene.instantiate()
 	in_team.add_unit(new_unit)
 	new_unit.traits.init()
-	print(new_unit.traits)
 	new_unit.get_node("traits").agility = rng.randfn(1.5, 0.25)
 	new_unit.get_node("traits").dexterity = rng.randfn(1.3, 0.25)
 	new_unit.get_node("traits").patience = rng.randfn(1.2, 0.25)
@@ -111,8 +110,6 @@ func load_in(in_player_team):
 	add_child(map)
 	map.get_node("NavigationRegion3D").add_child(barrier_scene.instantiate())
 	map.bake_navmesh()
-	for _i in map.get_children():
-		print(_i)
 	var camera = map.get_node("Camera3D")
 	camera.current = true
 	self.generate_demo_team()

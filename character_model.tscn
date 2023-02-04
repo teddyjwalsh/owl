@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cmiy07nndy5a7" path="res://weapon/weapons/hammer.tscn" id="6_31rp1"]
 [ext_resource type="PackedScene" uid="uid://tllox8y32g2x" path="res://weapon/weapons/shotgun.tscn" id="7_44sbw"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_iw5yi"]
+[sub_resource type="BoxMesh" id="BoxMesh_h71wb"]
 
 [node name="character_model" instance=ExtResource("1_sx5p3")]
 script = ExtResource("2_03d28")
@@ -33,14 +33,14 @@ bones/14/position = Vector3(-3.38073, 3.27399, 3.02884)
 bones/15/position = Vector3(-1.09007, 0.484757, -0.627298)
 
 [node name="weapon_attach" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="1"]
-transform = Transform3D(0.837307, 0.0180205, 0.546436, 0.540579, 0.122243, -0.832365, -0.0817978, 0.992337, 0.0926135, -0.925097, 9.50273, 1.42065)
+transform = Transform3D(0.837306, 0.0180215, 0.546437, 0.54058, 0.122243, -0.832364, -0.0817986, 0.992337, 0.0926124, -0.925096, 9.50273, 1.42065)
 bone_name = "weapon"
 bone_idx = 8
 
 [node name="weapon_model" type="MeshInstance3D" parent="Armature/Skeleton3D/weapon_attach" index="0"]
 transform = Transform3D(0.2, 0, 0, 0, 5.161, 0, 0, 0, 0.2, 0, 1.299, 0)
 visible = false
-mesh = SubResource("BoxMesh_iw5yi")
+mesh = SubResource("BoxMesh_h71wb")
 
 [node name="sniper" parent="Armature/Skeleton3D/weapon_attach" index="1" instance=ExtResource("3_t2gfv")]
 visible = false
@@ -57,7 +57,6 @@ visible = false
 [node name="shotgun" parent="Armature/Skeleton3D/weapon_attach" index="5" instance=ExtResource("7_44sbw")]
 
 [node name="blood_attach" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="2"]
-transform = Transform3D(0.935058, 0.085718, -0.343975, -0.0910487, 0.995846, 0.00065752, 0.342603, 0.0307037, 0.938979, -0.0413688, 6.23963, -0.0535937)
-visible = false
+transform = Transform3D(0.935058, 0.0857181, -0.343975, -0.0910487, 0.995846, 0.000657516, 0.342602, 0.0307037, 0.938979, -0.0413688, 6.23963, -0.0535937)
 bone_name = "body"
 bone_idx = 0

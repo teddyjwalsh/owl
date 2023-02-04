@@ -27,7 +27,6 @@ func _ready():
 	traits = get_node("traits")
 	full_name = name_gen.gen_full_names(1)[0]
 	full_name = full_name[0] + " " + full_name[1]
-	print(full_name)
 	chmod = char_model_scene.instantiate()
 	chmod.name = "character_model2"
 	chmod.rotate_object_local(Vector3(0,1,0),PI)
@@ -70,7 +69,7 @@ func _process(delta):
 	if controller.dead:
 		$CollisionShape3D.disabled = true
 		$unit_info.visible = false
-	var cur_size = pow(traits.get_size(),0.4)
+	var cur_size = pow(traits.get_size(),0.2)
 	$character_model2.scale = cur_size*Vector3(default_model_scale.x,default_model_scale.y*cur_size,default_model_scale.z)
 	
 func set_color(in_color):

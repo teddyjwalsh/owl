@@ -65,7 +65,7 @@ func get_melee_attack_damage_multiplier():
 	return temper*get_age_coefficient()*strength*(get_temperature_coefficient())*pow(energy, 0.2)
 
 func get_melee_attack_speed():
-	return get_age_coefficient()*agility*strength*(get_temperature_coefficient())*pow(energy, 0.2)/(get_equipment_size_coefficient())
+	return get_age_coefficient()*pow(agility,2)*strength*(get_temperature_coefficient())*pow(energy, 0.01)/(get_equipment_size_coefficient())
 	
 func get_melee_attack_energy():
 	return get_age_coefficient()*get_size()*get_equipment_size_coefficient()
@@ -74,18 +74,21 @@ func get_anxiety_coefficient():
 	return 1.0/get_age_coefficient()
 	
 func get_ranged_attack_speed():
-	return get_age_coefficient()*agility*dexterity*(get_temperature_coefficient())*pow(energy, 0.2)*get_anxiety_coefficient()
+	return get_age_coefficient()*agility*dexterity*(get_temperature_coefficient())*pow(energy, 0.001)*get_anxiety_coefficient()
 	
 func get_ranged_attack_period(in_weapon):
-	return 200*pow(1.0/(get_ranged_attack_speed()*in_weapon.base_attack_speed), 0.8)
+	return 2000*pow(get_size(),0.2)*pow(1.0/(get_ranged_attack_speed()*pow(in_weapon.base_attack_speed,2)), 0.8)
 	
 func get_melee_attack_period(in_weapon):
-	return 200*pow(1.0/get_melee_attack_speed()*in_weapon.base_attack_speed, 0.8)
+	return 2000*pow(get_size(),0.5)*pow(1.0/(get_melee_attack_speed()*pow(in_weapon.base_attack_speed,2)), 0.8)
 
 func get_movement_energy():
 	return get_age_coefficient()*get_size()*0.75
 	
 func get_size():
+	return base_size*strength
+	
+func get_full_size():
 	return base_size*strength*get_equipment_size_coefficient()
 	
 func get_learning_coefficient():
@@ -95,7 +98,7 @@ func get_teaching_coefficient():
 	return patience*intelligence*observation*friendliness/(get_age_coefficient()*temper)
 
 func get_max_health():
-	return strength*stamina
+	return pow(strength*stamina,0.8)
 	
 func get_after_movement_cooldown():
 	return 300.0/(get_age_coefficient()*stamina*dexterity*(get_anxiety_coefficient())*pow(energy, 0.2))

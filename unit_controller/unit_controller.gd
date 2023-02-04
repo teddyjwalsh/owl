@@ -11,7 +11,7 @@ var team_scene = preload("res://team/team.tscn")
 
 @onready var hi = get_node("/root/HumanInput")
 var main_team = null
-var selected_unit = null
+var selected_units = []
 var targeted_unit = null
 var is_human_controlled = false
 
@@ -29,16 +29,18 @@ func set_human_control():
 	self.get_node("/root/HumanInput").connect("stop",Callable(self,"_stop"))
 	self.get_node("/root/HumanInput").connect("unit_hovered",Callable(self,"_unit_hovered"))
 	self.get_node("/root/HumanInput").connect("non_unit_hovered",Callable(self,"_non_unit_hovered"))
+	self.get_node("/root/HumanInput").connect("drag_target_sig",Callable(self,"_drag_targeted"))
+	self.get_node("/root/HumanInput").connect("boxed_characters",_boxed_characters)
 	is_human_controlled = true
 
 func set_command_selected(in_command):
-	print("setggggg")
-	if selected_unit != null:
-		selected_unit.controller.set_command(in_command)
+	for unit in selected_units:
+		unit.controller.set_command(in_command)
+		
 		
 func queue_command_selected(in_command):
-	if selected_unit != null:
-		selected_unit.controller.queue_command(in_command)
+	for unit in selected_units:
+		unit.controller.queue_command(in_command)
 		
 func set_command(in_command, in_unit):
 	if in_unit != null:
@@ -53,12 +55,7 @@ func queue_command(in_command, in_unit):
 #	pass
 
 func _input(event):
-	if event is InputEventKey and event.keycode == KEY_T and !event.pressed:
-		var new_char = chr.instantiate()
-		new_char.transform.origin = Vector3(20,5,5)
-		new_char.name = "new_unit" + str(main_team.units.size())
-		main_team.add_unit(new_char)
-		selected_unit = new_char
+	pass
 		
 func _clicked_char(chr):
 	print("CLIEKCKDF")
@@ -78,11 +75,31 @@ func _unit_right_clicked(target, shift):
 			else:
 				set_command_selected({"type": "ATTACK", "target": target})
 				target.get_node("target_indicator").t = 0
+		else:
+			selected_units = [target]
 	elif target.get_class() == "building":
 		if shift:
 			queue_command_selected({"type": "MOVE", "dest": target.get_move_to()})
 		else:
 			set_command_selected({"type": "MOVE", "dest": target.get_move_to()})
+			
+func _drag_targeted(move_loc, target, shift):
+	if target.get_class() == "character":
+		if target.team.team_number != main_team.team_number:
+			if shift:
+				queue_command_selected({"type": "MOVE", "dest": move_loc})				
+				queue_command_selected({"type": "ATTACK", "target": target})
+				target.get_node("target_indicator").t = 0
+			else:
+				set_command_selected({"type": "MOVE", "dest": move_loc})				
+				queue_command_selected({"type": "ATTACK", "target": target})
+				target.get_node("target_indicator").t = 0
+		else:
+			if shift:
+				queue_command_selected({"type": "MOVE", "dest": move_loc})				
+			else:
+				set_command_selected({"type": "MOVE", "dest": move_loc})				
+
 
 func _stop(shift):
 	if shift:
@@ -92,15 +109,16 @@ func _stop(shift):
 
 func _unit_selected(unit_index):
 	if unit_index < main_team.units.size():
-		selected_unit = main_team.units[unit_index]
+		selected_units = [main_team.units[unit_index]]
 		
 func _process(delta):
 	for unit in main_team.units:
 		unit.select_indicator.get_node("cylinder").visible = false
 		if !is_human_controlled:
 			unit.select_indicator.visible = false
-	if selected_unit != null and is_human_controlled:
-		selected_unit.select_indicator.get_node("cylinder").visible = true
+	for unit in selected_units:
+		if is_human_controlled:
+			unit.select_indicator.get_node("cylinder").visible = true
 		
 func give_team(in_team):
 	main_team = in_team
@@ -117,4 +135,11 @@ func _non_unit_hovered(in_unit):
 	if targeted_unit != null:
 		targeted_unit.targeted = false
 	targeted_unit = null
+	
+func _boxed_characters(in_units):
+	selected_units.clear()
+	for unit in in_units:
+		if unit.team == main_team:
+			selected_units.append(unit)
+	pass
 		

@@ -43,7 +43,6 @@ func process_move_command(in_command, delta):
 	if new_command:
 		get_parent().nav.target_position = (in_command["dest"])
 		new_command = false
-		print("DFSDFSDF")
 		path_created = false
 	var to_vec = in_command["dest"] - get_parent().global_transform.origin
 	var dist = to_vec.length()
@@ -53,7 +52,6 @@ func process_move_command(in_command, delta):
 		current_command = null
 		#get_parent().global_transform.origin = in_command["dest"]
 		state = "IDLE"
-		print("DFSDFSDF22")
 	#print(get_parent().position)
 	
 func process_attack_command(in_command, delta):
@@ -65,7 +63,6 @@ func process_attack_command(in_command, delta):
 	current_command = null
 	#get_parent().global_transform.origin = in_command["dest"]
 	state = "IDLE"
-	print("sdfsdfsdf")
 	initial_reload = traits.get_ranged_attack_period(get_parent().inventory.weapon_slot)
 	current_reload = initial_reload
 	
@@ -88,18 +85,15 @@ func _process(delta):
 		if current_command == null and current_cooldown == null:
 			new_command = true
 			if next_command["type"] == "MOVE":
-				print("MOVE")
 				command_queue.pop_front()
 				current_command = next_command
 			elif next_command["type"] == "ATTACK":
-				print("ATTACK")
 				if current_reload != null:
 					pass
 				else:
 					command_queue.pop_front()
 					current_command = next_command
 		if next_command["type"] == "IDLE":
-			print("IDLE")
 			get_parent().nav.target_position = (get_parent().transform.origin)
 			current_command = null
 			state = "IDLE"
@@ -135,12 +129,10 @@ func queue_command(in_command):
 	command_queue.append(in_command)
 	
 func set_meta_pressed(in_command):
-	print("SET1")
 	current_line.clear()
 	if current_cooldown == null or in_command["type"] == "IDLE":
 		if current_reload != null and in_command["type"] == "ATTACK":
 			return
-		print("SET2")
 		current_command = in_command
 		new_command = true
 		get_parent().nav.target_position = (get_parent().transform.origin)
@@ -151,10 +143,8 @@ func _input(event):
 		if !event.pressed and event.button_index == 2:
 			if Input.is_key_pressed(KEY_SHIFT):
 				command_queue.append({"type": "MOVE", "dest": event.global_position})
-				print("QUEUED")
 			else:
 				current_command = {"type": "MOVE", "dest": event.global_position}
-				print("SET")
 				
 func set_cooldown(in_cooldown):
 	initial_cooldown = in_cooldown

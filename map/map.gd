@@ -22,6 +22,7 @@ func _ready():
 	camera.set_perspective(30, 0.1, 500)
 	camera.look_at(Vector3(0,0,0),Vector3(0,1,0))
 	#camera.set_orthogonal(62,1,400)
+	$ambient_noise.play()
 
 func load_team(in_team, team_spawn_position):
 	var radius = $team1_start.radius
@@ -32,11 +33,21 @@ func load_team(in_team, team_spawn_position):
 		spawn_pos = $team2_start.global_transform.origin
 		radius = $team1_start.radius
 		team2 = in_team
+		if team1 != null:
+			for unit1 in team1.units:
+				for unit2 in in_team.units:
+					unit1.add_collision_exception_with(unit2)
+					unit2.add_collision_exception_with(unit1)
 	else:
 		for unit in in_team.units:
 			unit.set_color(Color(0.3,0.8,0.5))
 		team1 = in_team
 		create_hud()
+		if team2 != null:
+			for unit1 in team2.units:
+				for unit2 in in_team.units:
+					unit1.add_collision_exception_with(unit2)
+					unit2.add_collision_exception_with(unit1)
 	for unit in in_team.units:
 		rng.randomize()
 		var rand_radius = rng.randf_range(8.0, radius)

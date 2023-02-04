@@ -60,18 +60,18 @@ func assess_state():
 		state = "IDLE"
 		current_line.clear()
 	return state
-	
+
 func process_attack_command(target):
 	if target != null:
-		print("sdfsdfsdf")
 		has_attacked = false
 		get_parent().look_at(target.global_transform.origin, Vector3(0,1,0))
 		var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
 		anim_player.play(get_parent().inventory.weapon_slot.animation)
+		get_parent().inventory.weapon_slot.swing()
 		get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "weapon"
 		attack_animation = anim_player.current_animation_length
 		attack_target = target
-	
+
 func process_attack(delta):
 	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")
 	if anim_player.current_animation != get_parent().inventory.weapon_slot.animation:
@@ -82,13 +82,16 @@ func process_attack(delta):
 		if !has_attacked:
 			if anim_state > animation_attack_points[get_parent().inventory.weapon_slot.animation]:
 				get_parent().inventory.attack(attack_target)
-				initial_reload = get_parent().get_node("traits").get_ranged_attack_period(get_parent().inventory.weapon_slot)
+				if get_parent().inventory.weapon_slot.weapon_type == 1:
+					initial_reload = get_parent().get_node("traits").get_ranged_attack_period(get_parent().inventory.weapon_slot)
+				if get_parent().inventory.weapon_slot.weapon_type == 0:
+					initial_reload = get_parent().get_node("traits").get_melee_attack_period(get_parent().inventory.weapon_slot)
+				
 				current_reload = initial_reload
 				has_attacked = true
 		#if attack_animation <= 0:
 		#	attack_animation = null
 
-	
 func process_new_command(in_command):
 	if in_command["type"] == "STOP":
 		get_parent().nav.target_position = get_parent().global_transform.origin
@@ -111,7 +114,6 @@ func update_cooldowns(delta):
 		if current_reload <= 0:
 			current_reload = null
 
-		
 func _process(delta):
 	if dead:
 		return
@@ -162,7 +164,3 @@ func _physics_process(delta):
 		if anim_player.current_animation != "idle":
 			anim_player.play("idle")
 			get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "weapon"
-		
-		
-	
-	

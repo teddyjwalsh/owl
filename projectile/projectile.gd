@@ -12,6 +12,7 @@ var firer = null
 var friendly_fire = false
 var imm_mesh = null
 var norm_dir = Vector3(1,0,0)
+var hit_player = null
 
 var last_positions = []
 var max_history = 20
@@ -50,8 +51,6 @@ func spawn_miss(pos):
 	get_tree().get_root().add_child(new_miss)
 
 func body_entered(body):
-	print("collide")
-	print(body)
 	if body.get_class() == "character":
 		if friendly_fire or body.team != firer.team:
 			if body != firer:
@@ -59,12 +58,14 @@ func body_entered(body):
 				var draw = firer.rng.randf_range(0,1.0)
 				if draw > miss_chance:
 					body.traits.add_health(-damage)
+					if hit_player != null:
+						hit_player.play()
 				else:
 					spawn_miss(global_transform.origin)
 				var hit_effect = hit_effect_scene.instantiate()
 				get_tree().get_root().add_child(hit_effect)
 				hit_effect.global_transform.origin = global_transform.origin
-				hit_effect.look_at(global_transform.origin + norm_dir)
+				hit_effect.look_at(global_transform.origin - norm_dir)
 				#hit_effect.get_node("hit_effect").process_material.direction = norm_dir
 				queue_free()
 	elif body.get_class() == "StaticBody3D":

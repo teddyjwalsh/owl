@@ -50,7 +50,6 @@ func generate_demo_warrior(team):
 func generate_demo_archer(team):
 	rng.randomize()
 	var new_unit = character_scene.instantiate()
-	print(new_unit.traits)
 	team.add_unit(new_unit)
 	new_unit.get_node("traits").agility = rng.randfn(1.5, 0.25)
 	new_unit.get_node("traits").dexterity = rng.randfn(1.3, 0.25)
@@ -110,7 +109,6 @@ func generate_demo_team():
 	#er.load_inventory(team)
 	
 func _on_join_battle_press():
-	print("JOIN BATTLE")
 	battle1 = battle1_scene.instantiate()
 	add_child(battle1)
 	battle1.load_in(team)
