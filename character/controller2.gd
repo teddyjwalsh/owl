@@ -113,6 +113,22 @@ func update_cooldowns(delta):
 		current_reload -= delta
 		if current_reload <= 0:
 			current_reload = null
+			
+func kill():
+	dead = true
+	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")	
+	anim_player.play("death")
+	get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "back"
+	get_parent().get_node("unit_info").visible = false
+	get_parent().get_node("CollisionShape3D").disabled = true
+	
+func revive():
+	dead = false
+	var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")	
+	anim_player.play("idle")
+	get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "back"
+	get_parent().get_node("unit_info").visible = true
+	get_parent().get_node("CollisionShape3D").disabled = false
 
 func _process(delta):
 	if dead:
@@ -132,11 +148,7 @@ func _process(delta):
 	if attack_animation != null:
 		process_attack(delta)
 	if get_parent().traits.health < 0.001:
-		dead = true
-		var anim_player = get_parent().get_node("character_model2").get_node("AnimationPlayer")	
-		anim_player.play("death")
-		get_parent().get_node("character_model2/Armature/Skeleton3D/weapon_attach").bone_name = "back"
-		get_parent().get_node("unit_info").visible = false
+		kill()
 	
 func _physics_process(delta):
 	assess_state()

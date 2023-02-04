@@ -38,6 +38,9 @@ func swing():
 func attack(target):
 	if target == null:
 		return
+	var dir = (target.global_transform.origin - firer.global_transform.origin).normalized()
+	var target_face = -target.global_transform.basis.z
+	var dir_factor = 1.0 + 0.3*dir.dot(target_face)
 	if weapon_type == 1:
 		var new_projectile = projectile.instantiate()
 		new_projectile.target = target
@@ -54,7 +57,6 @@ func attack(target):
 	else:
 		if get_world_3d() == null:
 			return
-		var dir = (target.global_transform.origin - firer.global_transform.origin).normalized()
 		var params = PhysicsRayQueryParameters3D.new()
 		params.from = firer.global_transform.origin + Vector3(0,1,0)
 		params.to = firer.global_transform.origin + dir * range  + Vector3(0,1,0)
@@ -66,7 +68,7 @@ func attack(target):
 			if selection.collider != null:
 				if selection.collider.get_class() == "character":
 					$hit_sound.play()
-					selection.collider.traits.add_health(-base_damage*firer.traits.get_melee_attack_damage_multiplier())
+					selection.collider.traits.add_health(-base_damage*firer.traits.get_melee_attack_damage_multiplier()*dir_factor)
 		target.on_hit(dir)
 
 func melee_attack(target):

@@ -140,7 +140,7 @@ func _input(event):
 			var res = get_ground_under_mouse()
 			if dragging and drag_target != null:
 				emit_signal("drag_target_sig", drag_start_pos, drag_target, shift)
-			elif "collider" in res and time_dragging < 0.1:
+			elif "collider" in res and time_dragging < 0.2:
 				if res["collider"].get_class() == "building":
 					emit_signal("unit_right_clicked", res["collider"], shift)
 				else:

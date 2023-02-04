@@ -54,10 +54,13 @@ func body_entered(body):
 	if body.get_class() == "character":
 		if friendly_fire or body.team != firer.team:
 			if body != firer:
+				var dir = (body.global_transform.origin - firer.global_transform.origin).normalized()
+				var target_face = -body.global_transform.basis.z
+				var dir_factor = 1.0 + 0.3*dir.dot(target_face)
 				var miss_chance = calculate_miss_chance(firer, body, weapon)
 				var draw = firer.rng.randf_range(0,1.0)
 				if draw > miss_chance:
-					body.traits.add_health(-damage)
+					body.traits.add_health(-damage*dir_factor)
 					if hit_player != null:
 						hit_player.play()
 				else:

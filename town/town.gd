@@ -25,6 +25,7 @@ func _ready():
 	$to_equip.connect("pressed", _to_equip_pressed)
 	$ambient_noise.play()
 	$ambient_noise2.play()
+	$ambient_noise3.play()
 	$ambient_noise.stream.loop = true
 	$ambient_noise2.stream.loop_mode = 1
 	
@@ -85,7 +86,7 @@ func load_in(in_team):
 func load_team(in_team):
 	var radius = spawn_radius
 	for unit in in_team.units:
-		unit.controller.dead = false
+		unit.controller.revive()
 		unit.traits.health = 1.0
 		rng.randomize()
 		var rand_radius = rng.randf_range(8.0, radius)

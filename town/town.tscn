@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://8dwismfrw0nb"]
+[gd_scene load_steps=14 format=3 uid="uid://8dwismfrw0nb"]
 
 [ext_resource type="Script" path="res://town/town.gd" id="1_qcms6"]
 [ext_resource type="Environment" uid="uid://bowq55mgk0tl2" path="res://town/town_env.tres" id="2_0b2h3"]
 [ext_resource type="Shader" path="res://town/ground.gdshader" id="3_18b07"]
 [ext_resource type="AudioStream" uid="uid://c4t45u5ml7gjp" path="res://sounds/543913__soundsexciting__bar-chatter.mp3" id="3_f8xrn"]
 [ext_resource type="AudioStream" uid="uid://bcekeysy1a43x" path="res://sounds/511683__tatianafeudal__church_sunrise.wav" id="4_762f3"]
+[ext_resource type="AudioStream" uid="uid://b54xayq3shnei" path="res://sounds/239154__reinsamba__traditional_bavarian_folk_-music2.wav" id="6_xuyxq"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_qpgsj"]
 
@@ -93,3 +94,7 @@ omni_shadow_mode = 0
 
 [node name="lamppost" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_aw5em")
+
+[node name="ambient_noise3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_xuyxq")
+volume_db = -23.46

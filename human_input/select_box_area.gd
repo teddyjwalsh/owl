@@ -15,7 +15,7 @@ func construct_from_screen_coords(in_screen_coords):
 	if viewport != null:
 		var collect_distance = 200
 		var camera = viewport.get_camera_3d()
-		if camera != null and in_screen_coords[0].x != in_screen_coords[1].x and in_screen_coords[0].y != in_screen_coords[1].y:
+		if camera != null and abs(in_screen_coords[0].x - in_screen_coords[1].x) > 5 and abs(in_screen_coords[0].y - in_screen_coords[1].y) > 5:
 			#$CollisionShape3D.shape = ConvexPolygonShape3D.new()
 			arr[0] = camera.project_position(in_screen_coords[0], 5)
 			arr[2] = camera.project_position(Vector2(in_screen_coords[0].x, in_screen_coords[1].y), 5)

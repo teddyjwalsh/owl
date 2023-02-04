@@ -66,9 +66,9 @@ func _process(delta):
 		$target_indicator.visible = true
 	else:
 		$target_indicator.visible = false
-	if controller.dead:
-		$CollisionShape3D.disabled = true
-		$unit_info.visible = false
+	#if controller.dead:
+		#$CollisionShape3D.disabled = true
+		#$unit_info.visible = false
 	var cur_size = pow(traits.get_size(),0.2)
 	$character_model2.scale = cur_size*Vector3(default_model_scale.x,default_model_scale.y*cur_size,default_model_scale.z)
 	
