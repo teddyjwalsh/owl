@@ -51,8 +51,12 @@ mesh = SubResource("BoxMesh_iqxkc")
 environment = SubResource("Environment_5rjeu")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.695784, 0.687959, -0.206392, -0.190949, 0.0998386, 0.97651, 0.692404, 0.71885, 0.0618988, 0, 21.0618, 0)
+transform = Transform3D(-0.309626, 0.37353, -0.874418, -0.651697, 0.586285, 0.481208, 0.692404, 0.71885, 0.061899, 0, 21.0618, 0)
+light_color = Color(0.984314, 0.596078, 0.643137, 1)
 light_energy = 0.394
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 384.3
 
 [node name="team1_start" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4584, 0, -0.174465)

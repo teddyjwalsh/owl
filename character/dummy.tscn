@@ -1,0 +1,115 @@
+[gd_scene load_steps=22 format=3 uid="uid://l5l5tasm2jqp"]
+
+[ext_resource type="Script" path="res://character/dummy.gd" id="1_huf04"]
+[ext_resource type="Script" path="res://character/traits.gd" id="3_6vb4f"]
+[ext_resource type="Script" path="res://character/inventory.gd" id="4_1p7qm"]
+[ext_resource type="Shader" path="res://character/highlight.gdshader" id="5_00v5v"]
+[ext_resource type="Shader" path="res://character/highlight_cylinder.gdshader" id="6_n3jy6"]
+[ext_resource type="Script" path="res://character/env_sensor.gd" id="7_wkmm2"]
+[ext_resource type="Script" path="res://character/name_gen.gd" id="8_3eqbq"]
+[ext_resource type="Script" path="res://character/unit_info.gd" id="9_keioa"]
+[ext_resource type="Script" path="res://character/health_bar.gd" id="12_wnjro"]
+[ext_resource type="Shader" path="res://character/health_bar.gdshader" id="13_637aj"]
+[ext_resource type="Script" path="res://character/energy_bar.gd" id="14_fli45"]
+[ext_resource type="PackedScene" uid="uid://cko4i6vjieuwd" path="res://utilities/waypoint/waypoint.tscn" id="15_5g7lt"]
+[ext_resource type="PackedScene" uid="uid://82nvk0ouojhg" path="res://character/dummy_model.tscn" id="15_i446n"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kn7ou"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ahlxo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nrtfy"]
+render_priority = 1
+shader = ExtResource("5_00v5v")
+shader_parameter/angle = -0.3
+shader_parameter/position = -0.2
+shader_parameter/spread = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dffh4"]
+material = SubResource("ShaderMaterial_nrtfy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tpyv6"]
+render_priority = 84
+shader = ExtResource("6_n3jy6")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8c37l"]
+material = SubResource("ShaderMaterial_tpyv6")
+top_radius = 1.0
+bottom_radius = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_plmt4"]
+font_size = 12
+font_color = Color(0.92549, 0.92549, 0.92549, 1)
+outline_size = 2
+outline_color = Color(0.321569, 0.321569, 0.321569, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6lhh3"]
+shader = ExtResource("13_637aj")
+shader_parameter/current_health = null
+shader_parameter/old_health = null
+
+[node name="dummy" type="CharacterBody3D"]
+transform = Transform3D(-0.999976, 0, -0.00691137, 0, 1, 0, 0.00691137, 0, -0.999976, 0, 0, 0)
+script = ExtResource("1_huf04")
+
+[node name="traits" type="Node" parent="."]
+script = ExtResource("3_6vb4f")
+
+[node name="inventory" type="Node" parent="."]
+script = ExtResource("4_1p7qm")
+
+[node name="character_model" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1.5, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_kn7ou")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 0)
+shape = SubResource("CapsuleShape3D_ahlxo")
+
+[node name="highlight" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.095885, 0)
+mesh = SubResource("PlaneMesh_dffh4")
+
+[node name="cylinder" type="MeshInstance3D" parent="highlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_8c37l")
+
+[node name="env_sensor" type="Node" parent="."]
+script = ExtResource("7_wkmm2")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="name_gen" type="Node" parent="."]
+script = ExtResource("8_3eqbq")
+
+[node name="unit_info" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("9_keioa")
+
+[node name="name" type="Label" parent="unit_info"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_plmt4")
+
+[node name="HBoxContainer" type="HFlowContainer" parent="unit_info"]
+layout_mode = 2
+script = ExtResource("12_wnjro")
+
+[node name="health_bar" type="ColorRect" parent="unit_info/HBoxContainer"]
+material = SubResource("ShaderMaterial_6lhh3")
+layout_mode = 2
+
+[node name="energy_bar" type="ColorRect" parent="unit_info"]
+layout_mode = 2
+script = ExtResource("14_fli45")
+
+[node name="target_indicator" parent="." instance=ExtResource("15_5g7lt")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+visible = false
+
+[node name="character_model2" parent="." instance=ExtResource("15_i446n")]
+transform = Transform3D(1.5, 0, 0, 0, 1.44559, -0.400328, 0, 0.400328, 1.44559, 0, 0, 0)

@@ -6,6 +6,7 @@ extends Node3D
 # var b = "text"
 
 var charact = preload("res://unit_controller/unit_controller.tscn")
+@onready var human_input = get_node("/root/HumanInput")
 @onready var camera = $Camera3D
 var rng = RandomNumberGenerator.new()
 var team1 = null
@@ -23,6 +24,7 @@ func _ready():
 	camera.look_at(Vector3(0,0,0),Vector3(0,1,0))
 	#camera.set_orthogonal(62,1,400)
 	$ambient_noise.play()
+	get_node("/root/HumanInput").select_enabled = true
 
 func load_team(in_team, team_spawn_position):
 	var radius = $team1_start.radius
@@ -97,7 +99,7 @@ func _process(delta):
 		if !unit.controller.dead:
 			any_alive = true
 			break
-	if !any_alive:
+	if !any_alive:	
 		winner = 2
 		
 	any_alive = false

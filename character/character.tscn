@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cf7nsep3xymjr"]
+[gd_scene load_steps=31 format=3 uid="uid://cf7nsep3xymjr"]
 
 [ext_resource type="Script" path="res://character/character.gd" id="2"]
 [ext_resource type="Script" path="res://character/controller2.gd" id="2_0r8xn"]
@@ -38,6 +38,12 @@ shader = ExtResource("6_l5abw")
 material = SubResource("ShaderMaterial_tpyv6")
 top_radius = 1.0
 bottom_radius = 1.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_plmt4"]
+font_size = 12
+font_color = Color(0.92549, 0.92549, 0.92549, 1)
+outline_size = 2
+outline_color = Color(0.321569, 0.321569, 0.321569, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6lhh3"]
 shader = ExtResource("12_0mmr3")
@@ -497,6 +503,10 @@ script = ExtResource("10_i77be")
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_4wo57")
+
+[node name="name" type="Label" parent="unit_info"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_plmt4")
 
 [node name="reload_bar" type="ColorRect" parent="unit_info"]
 layout_mode = 2

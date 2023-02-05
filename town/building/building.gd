@@ -10,14 +10,14 @@ var bar_scene = preload("res://models/bar.glb")
 var building_mat = preload("res://town/building/building.tres")
 
 var building_types = ["Gym","Firing Range","Bar"]
-var stat_dict = {"Gym": {"strength": 0.01, "agility": 0.01, "stamina": 0.01}, \
+var stat_dict = {"Gym": {"strength": 0.01, "agility": 0.01, "stamina": 0.1}, \
 		"Firing Range":{"aim": 0.01, "patience": 0.01, "dexterity": 0.01}, \
 		"University":{"intelligence": 0.01, "patience": 0.01, "pride": -0.01}, \
 		"Blacksmith":{"dexterity": 0.01, "strength": 0.01, "stamina": 0.01}, \
 		"Bar": {"friendliness": 0.01, "anxiety": -0.01}
 		}
 var earning_rate = 0
-var synergy_rate = 0.001
+var synergy_rate = 0.0001
 var t = 0
 var building_type = "Firing Range"
 var mesh_node = null
@@ -67,29 +67,33 @@ func _process(delta):
 	for unit in units:
 		units[unit].team.money += earning_rate*delta
 		if t - units_enter_time[units[unit].get_instance_id()] > 5.0:
-			if units[unit].controller.state != "IDLE" and units[unit].controller.state != "COOLDOWN":
+			if units[unit].controller.state != "IDLE" and \
+					units[unit].controller.state != "RELOADING" and \
+					units[unit].controller.state != "RELOADING_COOLDOWN" and \
+					units[unit].controller.state != "COOLDOWN":
+				print(units[unit].controller.state)
 				to_remove.append(unit)
 	for tr in to_remove:
 		units[tr].visible = true
 		units.erase(tr)
 	for unit1 in units:
-		for unit2 in units:
-			if unit2 != unit1:
-				if units[unit2] not in units[unit1].traits.synergy:
-					units[unit1].traits.synergy[units[unit2]] = 1.0
-				units[unit1].traits.synergy[units[unit2]] += synergy_rate*delta
+		var learning_stacks = 0
 		for stat in stat_dict[building_type]:
-			var learning_rate = 0.01
+			var learning_rate = 0.002
 			var learning_coeff = units[unit1].traits.get_learning_coefficient()
-			for unit2 in units:
-				if unit2 != unit1:
-					if units[unit2].traits.get(stat) > units[unit1].traits.get(stat):
-						var diff = units[unit2].traits.get(stat) - units[unit1].traits.get(stat)
-						var teaching_coeff = units[unit2].traits.get_teaching_coefficient()
-						var synergy = units[unit1].traits.synergy[units[unit2]]
-						learning_rate *= synergy*teaching_coeff*(1 + diff)
+			if learning_stacks < 2:
+				for unit2 in units:
+					if unit2 != unit1:
+						learning_stacks += 1
+						if units[unit2] not in units[unit1].traits.synergy:
+							units[unit1].traits.synergy[units[unit2]] = 1.0
+						units[unit1].traits.synergy[units[unit2]] += synergy_rate*delta
+						if units[unit2].traits.get(stat) > units[unit1].traits.get(stat):
+							var diff = units[unit2].traits.get(stat) - units[unit1].traits.get(stat)
+							var teaching_coeff = units[unit2].traits.get_teaching_coefficient()
+							var synergy = units[unit1].traits.synergy[units[unit2]]
+							learning_rate *= synergy*teaching_coeff*pow(1 + diff, 0.3)
 			units[unit1].traits.learn(delta*learning_coeff*learning_rate, stat)
-		print(units[unit1].full_name + " ",units[unit1].traits.agility," ", units[unit1].traits.get_learning_coefficient())
 
 func get_move_to():
 	return mesh_node.get_node("door").global_transform.origin

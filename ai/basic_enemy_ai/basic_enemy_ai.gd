@@ -11,7 +11,7 @@ var unit_targets = []
 func _ready():
 	uc = unit_controller_scene.instantiate() # Replace with function body.
 	add_child(uc)
-	for i in range(5):
+	for i in range(8):
 		unit_states.append("IDLE")
 		unit_targets.append(null)
 		

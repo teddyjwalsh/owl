@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3hbvory3vab4"]
+[gd_scene load_steps=11 format=3 uid="uid://d3hbvory3vab4"]
 
 [ext_resource type="Script" path="res://equipment_room/equipment_room.gd" id="1_28qtv"]
 [ext_resource type="Script" path="res://equipment_room/ScrollContainer.gd" id="2_fh2uf"]
@@ -6,13 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://donfhwyeswmy7" path="res://weapon/weapons/axe.tscn" id="4_os2vr"]
 [ext_resource type="PackedScene" uid="uid://um5xuktqrb5p" path="res://weapon/weapons/bow.tscn" id="5_2thcg"]
 [ext_resource type="PackedScene" uid="uid://cmiy07nndy5a7" path="res://weapon/weapons/hammer.tscn" id="6_p8tvm"]
+[ext_resource type="PackedScene" uid="uid://tllox8y32g2x" path="res://weapon/weapons/shotgun.tscn" id="7_j53kw"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_1j025"]
+[sub_resource type="BoxMesh" id="BoxMesh_ypmyi"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_27p4f"]
+[sub_resource type="BoxMesh" id="BoxMesh_o81h8"]
 size = Vector3(100, 1, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_avhod"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_a8ngt"]
 
 [node name="equipment_room" type="Node2D"]
 script = ExtResource("1_28qtv")
@@ -37,7 +38,7 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 [node name="weapon_model" type="MeshInstance3D" parent="drag_models"]
 transform = Transform3D(0.2, 0, 0, 0, 5.161, 0, 0, 0, 0.2, 0, 1.299, 0)
 visible = false
-mesh = SubResource("BoxMesh_1j025")
+mesh = SubResource("BoxMesh_ypmyi")
 
 [node name="sniper" parent="drag_models" instance=ExtResource("3_fvrc2")]
 visible = false
@@ -51,16 +52,18 @@ visible = false
 [node name="hammer" parent="drag_models" instance=ExtResource("6_p8tvm")]
 visible = false
 
+[node name="shotgun" parent="drag_models" instance=ExtResource("7_j53kw")]
+
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_27p4f")
+mesh = SubResource("BoxMesh_o81h8")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
 transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, 0, 0)
-shape = SubResource("BoxShape3D_avhod")
+shape = SubResource("BoxShape3D_a8ngt")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7237, 11.0768)

@@ -9,6 +9,7 @@ var last_clicked = null
 var RAY_LENGTH = 400
 var hovered_unit = null
 
+var select_enabled = false
 var selecting = false
 var select_start_pos = null
 var time_selecting = null
@@ -82,6 +83,7 @@ func _input(event):
 			$drag_attack.start_point = drag_start_pos + Vector3(0,0.1,0)
 			var res = get_object_under_mouse()
 			if "collider" in res:
+				print(res["collider"].get_class())
 				if res["collider"].get_class() == "character":
 					$drag_attack.end_point = res["collider"].global_transform.origin + Vector3(0,0.1,0)
 					emit_signal("unit_hovered", res["collider"])
@@ -111,10 +113,11 @@ func _input(event):
 			if "collider" in res:
 				if res["collider"].get_class() == "character":
 					emit_signal("unit_right_clicked", res["collider"], shift)
-			time_selecting = 0
-			selecting = true
-			select_start_pos = event.position
-			select_moved = false
+			if select_enabled:
+				time_selecting = 0
+				selecting = true
+				select_start_pos = event.position
+				select_moved = false
 		if event.button_index == 1 and !event.is_pressed():
 			if select_moved:
 				var selectable_bodies = []			

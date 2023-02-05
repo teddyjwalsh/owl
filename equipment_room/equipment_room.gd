@@ -4,13 +4,14 @@ var weapon_drag_scene = preload("res://equipment_room/weapon_drag.tscn")
 var dragged_weapon = null
 var team = null
 @onready var battle_queue = get_node("/root/BattleQueue")
+@onready var human_input = get_node("/root/HumanInput")
 
 var drags = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$to_battle.connect("pressed", _to_battle_pressed)
-
+	get_node("/root/HumanInput").select_enabled = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

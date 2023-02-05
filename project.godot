@@ -23,6 +23,7 @@ BattleQueue="*res://battle_queue/battle_queue.tscn"
 
 [display]
 
+window/stretch/mode="viewport"
 window/stretch/shrink=1.5
 
 [gui]

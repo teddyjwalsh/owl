@@ -24,7 +24,7 @@ func generate_demo_warrior(in_team):
 	new_unit.get_node("traits").pride = rng.randfn(1.3, 0.25)
 	new_unit.get_node("traits").anxiety = rng.randfn(0.7, 0.25)
 	new_unit.get_node("traits").patience = rng.randfn(0.9, 0.25)
-	new_unit.get_node("traits").stamina = rng.randfn(110, 20)
+	new_unit.get_node("traits").stamina = rng.randfn(1.1, 0.2)
 	var new_weap = wg.gen("Battle Axe")
 	new_unit.get_node("inventory").set_weapon(new_weap)
 	in_team.inventory.append(new_weap)
@@ -39,7 +39,7 @@ func generate_demo_archer(in_team):
 	new_unit.get_node("traits").agility = rng.randfn(1.5, 0.25)
 	new_unit.get_node("traits").dexterity = rng.randfn(1.3, 0.25)
 	new_unit.get_node("traits").patience = rng.randfn(1.2, 0.25)
-	new_unit.get_node("traits").stamina = rng.randfn(90, 20)
+	new_unit.get_node("traits").stamina = rng.randfn(0.9, 0.2)
 	new_unit.get_node("traits").observation = rng.randfn(1.2, 0.25)
 	var new_weap = wg.gen("Long Bow")
 	new_unit.get_node("inventory").set_weapon(new_weap)
@@ -97,7 +97,7 @@ func generate_demo_team():
 	#generate_demo_monk(unit_controller.main_team)
 	generate_demo_archer(unit_controller.main_team)
 	for unit in unit_controller.main_team.units:
-		#unit.controller.dead = true
+		unit.controller.dead = true
 		unit.get_node("controller").current_line.visible = false
 	team = unit_controller.main_team
 

@@ -68,7 +68,7 @@ func _right_clicked(pos, shift):
 		
 func _unit_right_clicked(target, shift):
 	if target.get_class() == "character":
-		if target.team.team_number != main_team.team_number:
+		if target.team != main_team:
 			if shift:
 				queue_command_selected({"type": "ATTACK", "target": target})
 				target.get_node("target_indicator").t = 0
@@ -85,7 +85,7 @@ func _unit_right_clicked(target, shift):
 			
 func _drag_targeted(move_loc, target, shift):
 	if target.get_class() == "character":
-		if target.team.team_number != main_team.team_number:
+		if target.team != main_team:
 			if shift:
 				queue_command_selected({"type": "MOVE", "dest": move_loc})				
 				queue_command_selected({"type": "ATTACK", "target": target})

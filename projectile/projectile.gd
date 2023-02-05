@@ -36,7 +36,7 @@ func _process(delta):
 		last_positions.push_front(global_transform.origin)
 		if last_positions.size() > max_history:
 			last_positions.pop_back()
-	if target == null or target.controller.dead:
+	if target == null or target.is_dead():
 		queue_free()
 		
 func calculate_miss_chance(in_attacker, in_enemy, in_weapon):

@@ -11,9 +11,11 @@ var equipment_room_scene = preload("res://equipment_room/equipment_room.tscn")
 var team = null
 var time_limit = 60
 @onready var battle_queue = get_node("/root/BattleQueue")
+var human_input = get_node("/root/HumanInput")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	get_node("/root/HumanInput").select_enabled = true
 	mesh = ImmediateMesh.new()
 	#mat.no_depth_test = true
 	#mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -25,7 +27,8 @@ func _ready():
 	$to_equip.connect("pressed", _to_equip_pressed)
 	$ambient_noise.play()
 	$ambient_noise2.play()
-	$ambient_noise3.play()
+	if rng.randf_range(0,1) < 0.2:
+		$ambient_noise3.play()
 	$ambient_noise.stream.loop = true
 	$ambient_noise2.stream.loop_mode = 1
 	
@@ -103,4 +106,5 @@ func _process(delta):
 		battle_queue.next()
 	
 func _to_equip_pressed():
+	get_node("/root/HumanInput").select_enabled = false
 	battle_queue.next()

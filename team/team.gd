@@ -7,7 +7,7 @@ var units = []
 var intro_scene = null
 var money = 0
 var inventory = []
-var colors = [Vector3(0.8, 0.3, 0.3), Vector3(0.3, 0.8, 0.3), Vector3(0.3, 0.3, 0.8), Vector3(0.8, 0.3, 0.8)]
+var colors = [Vector3(0.8, 0.3, 0.3), Vector3(0.3, 0.8, 0.3), Vector3(0.3, 0.3, 0.8), Vector3(0.8, 0.3, 0.8), Vector3(0.3, 0.8, 0.8), Vector3(0.8, 0.8, 0.3)]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

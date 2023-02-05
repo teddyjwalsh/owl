@@ -1,6 +1,6 @@
-extends Node
+extends CharacterBody3D
 
-var char_model_scene = preload("res://character_model.tscn")
+var char_model_scene = preload("res://character/dummy_model.tscn")
 var hat_scene = preload("res://character/hats/straw_hat.tscn")
 var viking_hat_scene = preload("res://character/hats/viking_hat.tscn")
 var beanie_scene = preload("res://character/hats/beanie.tscn")
@@ -27,30 +27,16 @@ func _ready():
 	traits = get_node("traits")
 	full_name = name_gen.gen_full_names(1)[0]
 	full_name = full_name[0]# + " " + full_name[1]
-	chmod = char_model_scene.instantiate()
-	chmod.name = "character_model2"
-	chmod.rotate_object_local(Vector3(0,1,0),PI)
-	chmod.scale = default_model_scale
-	
-	add_child(chmod)
-	$character_model2/AnimationPlayer.set_blend_time("idle", "run", 0.2)
-	$character_model2/AnimationPlayer.set_blend_time("run", "idle", 0.2)
-	$character_model2/AnimationPlayer.set_blend_time("rifle", "idle", 10.0)
-	$character_model2/AnimationPlayer.set_blend_time("rifle", "run", 2.0)
-	$character_model2/AnimationPlayer.set_blend_time("axe", "run", 1.0)
-	$character_model2/AnimationPlayer.set_blend_time("axe", "idle", 1.0)
-	$character_model2/AnimationPlayer.set_blend_time("bow", "idle", 1.0)
-	$character_model2/AnimationPlayer.set_blend_time("bow", "run", 1.0)
-	
-	var straw_hat = hat_scenes[rng.randi_range(0,hat_scenes.size()-1)].instantiate()
-	straw_hat.transform.origin.y += 0.4
-	var bone_attach = BoneAttachment3D.new()
-	$character_model2/Armature/Skeleton3D.add_child(bone_attach)
-	bone_attach.set_bone_name("head")
-	bone_attach.add_child(straw_hat)
-
-func get_movespeed():
-	return 50
+	traits.mean = 1.0
+	traits.dev = 0.0
+	traits.reinit()
+	traits.health_regen = 2.0
+#	var straw_hat = hat_scenes[rng.randi_range(0,hat_scenes.size()-1)].instantiate()
+#	straw_hat.transform.origin.y += 0.4
+#	var bone_attach = BoneAttachment3D.new()
+#	$character_model2/Armature/Skeleton3D.add_child(bone_attach)
+#	bone_attach.set_bone_name("head")
+#	bone_attach.add_child(straw_hat)
 	
 func get_graphical_width():
 	return traits.size*base_width
@@ -70,7 +56,7 @@ func _process(delta):
 		#$CollisionShape3D.disabled = true
 		#$unit_info.visible = false
 	var cur_size = pow(traits.get_size(),0.2)
-	$character_model2.scale = cur_size*Vector3(default_model_scale.x,default_model_scale.y*cur_size,default_model_scale.z)
+	#$character_model2.scale = cur_size*Vector3(default_model_scale.x,default_model_scale.y*cur_size,default_model_scale.z)
 	
 func set_color(in_color):
 	var new_mat = $character_model2/Armature/Skeleton3D/Cube.get_active_material(0).duplicate()
@@ -82,17 +68,17 @@ func set_teammate_color(in_color):
 	$highlight/cylinder.set_instance_shader_parameter("color", in_color)
 	
 func on_hit(direction):
-	var blood_instance = blood_scene.instantiate()
-	$character_model2/Armature/Skeleton3D/blood_attach.add_child(blood_instance)
-	blood_instance.get_node("GPUParticles3D").process_material.direction = -direction
+	pass
+	#var blood_instance = blood_scene.instantiate()
+	#$character_model2/Armature/Skeleton3D/blood_attach.add_child(blood_instance)
+	#blood_instance.get_node("GPUParticles3D").process_material.direction = -direction
 	
 func unequip():
 	inventory.weapon_slot.firer = null
 	inventory.weapon_slot = null
 	
-	
 func is_dead():
-	return controller.dead
+	return false
 
 func equip(in_weapon):
 	if in_weapon.firer != null:
