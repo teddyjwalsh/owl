@@ -3,14 +3,14 @@
 [ext_resource type="Script" path="res://town/building/building.gd" id="1_wmlcx"]
 [ext_resource type="Material" uid="uid://djdnoiceqbjnd" path="res://town/building/building.tres" id="2_p6uw0"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_poybg"]
+[sub_resource type="BoxMesh" id="BoxMesh_q0gqk"]
 material = ExtResource("2_p6uw0")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vc1ca"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_eegev"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_uw3pl"]
+[sub_resource type="BoxMesh" id="BoxMesh_sxg87"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_e2rlm"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gu6bf"]
 radius = 1.25912
 height = 3.92533
 
@@ -21,20 +21,20 @@ script = ExtResource("1_wmlcx")
 [node name="building_mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 visible = false
-mesh = SubResource("BoxMesh_poybg")
+mesh = SubResource("BoxMesh_q0gqk")
 
 [node name="building_collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 visible = false
-shape = SubResource("BoxShape3D_vc1ca")
+shape = SubResource("BoxShape3D_eegev")
 
 [node name="door_mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.3, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0, 0.244, -0.474)
 visible = false
-mesh = SubResource("BoxMesh_uw3pl")
+mesh = SubResource("BoxMesh_sxg87")
 
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="door_collision" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
-shape = SubResource("CapsuleShape3D_e2rlm")
+shape = SubResource("CapsuleShape3D_gu6bf")

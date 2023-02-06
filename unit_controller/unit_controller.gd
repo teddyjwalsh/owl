@@ -78,10 +78,17 @@ func _unit_right_clicked(target, shift):
 		else:
 			selected_units = [target]
 	elif target.get_class() == "building":
-		if shift:
-			queue_command_selected({"type": "MOVE", "dest": target.get_move_to()})
+		if target.is_shop_type:
+			if hi.current_shop_interface != null:
+				hi.current_shop_interface.visible = false
+			hi.current_shop_interface = target.shop_interface
+			hi.current_shop_interface.visible = true
+			hi.current_shop_interface.team = main_team
 		else:
-			set_command_selected({"type": "MOVE", "dest": target.get_move_to()})
+			if shift:
+				queue_command_selected({"type": "MOVE", "dest": target.get_move_to()})
+			else:
+				set_command_selected({"type": "MOVE", "dest": target.get_move_to()})
 			
 func _drag_targeted(move_loc, target, shift):
 	if target.get_class() == "character":

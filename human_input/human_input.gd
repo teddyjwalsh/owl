@@ -22,6 +22,8 @@ var drag_target = null
 var time_dragging = null
 var drag_moved = false
 
+var current_shop_interface = null
+
 signal clicked_char(chr)
 signal right_clicked(pos, queue)
 signal unit_right_clicked(target, queue)

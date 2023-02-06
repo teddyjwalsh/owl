@@ -6,15 +6,18 @@ extends Node3D
 # var b = "text"
 
 var charact = preload("res://unit_controller/unit_controller.tscn")
+var weather = null
 @onready var human_input = get_node("/root/HumanInput")
 @onready var camera = $Camera3D
 var rng = RandomNumberGenerator.new()
 var team1 = null
 var team2 = null
 var winner = null
+var bounty = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	weather = get_node("/root/WeatherServer")
 	#var instance = charact.instantiate()
 	#instance.name = "u"
 	#add_child(instance)
@@ -25,6 +28,28 @@ func _ready():
 	#camera.set_orthogonal(62,1,400)
 	$ambient_noise.play()
 	get_node("/root/HumanInput").select_enabled = true
+	if weather.weather == "snow":
+		enable_snow()
+	if weather.weather == "sunny":
+		enable_sunny()
+	if weather.weather == "rain":
+		enable_rain()
+
+func enable_snow():
+	$Camera3D/snow.visible = true
+	$Camera3D/rain.visible = false
+	$NavigationRegion3D/ground/MeshInstance3D.set_instance_shader_parameter("weather",1)
+	
+func enable_sunny():
+	$Camera3D/snow.visible = false
+	$Camera3D/rain.visible = false
+	$NavigationRegion3D/ground/MeshInstance3D.set_instance_shader_parameter("weather",0)
+	
+func enable_rain():
+	$Camera3D/rain.visible = true
+	$Camera3D/snow.visible = false
+	$NavigationRegion3D/ground/MeshInstance3D.set_instance_shader_parameter("weather",2)
+	
 
 func load_team(in_team, team_spawn_position):
 	var radius = $team1_start.radius
@@ -99,7 +124,9 @@ func _process(delta):
 		if !unit.controller.dead:
 			any_alive = true
 			break
-	if !any_alive:	
+	if !any_alive:
+		if winner == null:
+			team2.money += bounty
 		winner = 2
 		
 	any_alive = false
@@ -108,4 +135,6 @@ func _process(delta):
 			any_alive = true
 			break
 	if !any_alive:
+		if winner == null:
+			team1.money += bounty
 		winner = 1

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bhkxyfalw0gcc"]
+[gd_scene load_steps=7 format=3 uid="uid://bhkxyfalw0gcc"]
 
 [ext_resource type="Script" path="res://demo/demo.gd" id="1"]
 [ext_resource type="Shader" path="res://demo/demo.gdshader" id="2_nig4r"]
+[ext_resource type="Script" path="res://demo/money.gd" id="2_tfmts"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vrhy4"]
 frequency = 0.008
@@ -29,3 +30,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="money" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = -41.0
+offset_right = 62.0
+offset_bottom = -18.0
+grow_vertical = 0
+script = ExtResource("2_tfmts")

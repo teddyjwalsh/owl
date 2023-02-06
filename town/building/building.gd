@@ -1,19 +1,22 @@
-extends StaticBody3D
-	
+extends StaticBody3D	
+
 var rng = RandomNumberGenerator.new()
 var units = {}
 var units_enter_time = {}
 
 var gym_scene = preload("res://models/gym.glb")
 var firing_range_scene = preload("res://models/firing_range.glb")
+var gun_shop_scene = preload("res://models/gun_shop.glb")
 var bar_scene = preload("res://models/bar.glb")
 var building_mat = preload("res://town/building/building.tres")
+var shop_interface_scene = preload("res://shop/shop_interface.tscn")
 
-var building_types = ["Gym","Firing Range","Bar"]
+var building_types = ["Gym","Firing Range","Bar","Gun Shop"]
 var stat_dict = {"Gym": {"strength": 0.01, "agility": 0.01, "stamina": 0.1}, \
 		"Firing Range":{"aim": 0.01, "patience": 0.01, "dexterity": 0.01}, \
 		"University":{"intelligence": 0.01, "patience": 0.01, "pride": -0.01}, \
 		"Blacksmith":{"dexterity": 0.01, "strength": 0.01, "stamina": 0.01}, \
+		"Gun Shop":{}, \
 		"Bar": {"friendliness": 0.01, "anxiety": -0.01}
 		}
 var earning_rate = 0
@@ -21,6 +24,8 @@ var synergy_rate = 0.0001
 var t = 0
 var building_type = "Firing Range"
 var mesh_node = null
+var shop_interface
+var is_shop_type = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -47,6 +52,17 @@ func _ready():
 		$Area3D.connect("body_entered",Callable(self,"_door_entered"))
 		$Area3D.global_transform.origin = bar.get_node("door").global_transform.origin
 		mesh_node = bar
+	elif building_type == "Gun Shop":
+		var gun_shop = gun_shop_scene.instantiate()
+		gun_shop.scale = Vector3(0.6,0.6,0.6)
+		add_child(gun_shop)
+		$Area3D.connect("body_entered",Callable(self,"_door_entered"))
+		$Area3D.global_transform.origin = gun_shop.get_node("door").global_transform.origin
+		mesh_node = gun_shop
+		shop_interface = shop_interface_scene.instantiate()
+		add_child(shop_interface)
+		shop_interface.visible = false
+		is_shop_type = true
 	var lamp = mesh_node.get_node("lamp")
 	if lamp != null:
 		var lamp_spot = lamp.global_transform.origin
@@ -56,7 +72,7 @@ func _ready():
 		new_lamp.shadow_enabled = true
 		new_lamp.light_color = Color(1,0.8,0.6)
 		new_lamp.light_energy = 1
-		new_lamp.global_transform.origin = lamp_spot - Vector3(0,0.2,0)
+		new_lamp.global_transform.origin = lamp_spot - Vector3(0,0.1,0)
 		
 		
 

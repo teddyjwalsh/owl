@@ -28,7 +28,7 @@ func generate_demo_warrior(in_team):
 	var new_weap = wg.gen("Battle Axe")
 	new_unit.get_node("inventory").set_weapon(new_weap)
 	in_team.inventory.append(new_weap)
-	in_team.add_child(new_weap)
+	#in_team.add_child(new_weap)
 	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*2.0
 	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*1.0
 	
@@ -44,7 +44,7 @@ func generate_demo_archer(in_team):
 	var new_weap = wg.gen("Long Bow")
 	new_unit.get_node("inventory").set_weapon(new_weap)
 	in_team.inventory.append(new_weap)
-	in_team.add_child(new_weap)
+	#in_team.add_child(new_weap)
 	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*0.3
 	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*0.3
 	return new_unit
@@ -61,7 +61,7 @@ func generate_demo_mage(in_team):
 	var new_weap = wg.gen("Revolver")
 	new_unit.get_node("inventory").set_weapon(new_weap)
 	in_team.inventory.append(new_weap)
-	in_team.add_child(new_weap)
+	#in_team.add_child(new_weap)
 	new_unit.get_node("traits").stamina = new_unit.get_node("traits").stamina*0.3
 	new_unit.get_node("traits").strength = new_unit.get_node("traits").strength*0.3
 	return new_unit
@@ -81,7 +81,7 @@ func generate_demo_monk(in_team):
 	var new_weap = wg.gen("Dagger")
 	new_unit.get_node("inventory").set_weapon(new_weap)
 	in_team.inventory.append(new_weap)
-	in_team.add_child(new_weap)
+	#in_team.add_child(new_weap)
 	return new_unit
 	
 	

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://2m2t0kyyh1rf"]
+
+[ext_resource type="Script" path="res://shop/shop_slot.gd" id="1_v5hij"]
+
+[node name="shop_slot" type="Button"]
+custom_minimum_size = Vector2(100, 100)
+script = ExtResource("1_v5hij")

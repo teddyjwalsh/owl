@@ -14,7 +14,7 @@ var main_menu = null
 var rng = RandomNumberGenerator.new()
 var team = null
 var town1 = null
-@onready var weapon_gen = weapon_gen_scene.instantiate()
+@onready var weapon_gen = get_node("/root/WeaponGenerator")
 @onready var battle_queue = get_node("/root/BattleQueue")
 
 func _ready():
@@ -39,7 +39,7 @@ func generate_demo_warrior(team):
 	new_unit.get_node("traits").pride = rng.randfn(1.3, 0.25)
 	new_unit.get_node("traits").anxiety = rng.randfn(0.7, 0.25)
 	new_unit.get_node("traits").patience = rng.randfn(0.9, 0.25)
-	new_unit.get_node("traits").stamina = rng.randfn(110, 20)
+	new_unit.get_node("traits").stamina = rng.randfn(1.1, 0.2)
 	var new_weap = weapon_gen.gen("Hammer")
 	new_unit.get_node("inventory").set_weapon(new_weap)
 	team.inventory.append(new_weap)
@@ -104,6 +104,7 @@ func generate_demo_team():
 	generate_demo_mage(unit_controller.main_team)
 	generate_demo_monk(unit_controller.main_team)
 	team = unit_controller.main_team
+	$money.team = team
 	#var er = equipment_room_scene.instantiate()
 	#add_child(er)
 	#er.load_inventory(team)

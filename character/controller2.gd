@@ -143,7 +143,7 @@ func _process(delta):
 		elif command_queue.front()["type"] == "MOVE" and \
 				(assess_state() == "RELOADING" or assess_state() == "RELOADING_MOVE"):
 			process_new_command(command_queue.pop_front())
-			command_queue.pop_front()
+			#command_queue.pop_front()
 	update_cooldowns(delta)
 	if attack_animation != null:
 		process_attack(delta)

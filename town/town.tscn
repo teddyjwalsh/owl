@@ -8,27 +8,27 @@
 [ext_resource type="AudioStream" uid="uid://b54xayq3shnei" path="res://sounds/239154__reinsamba__traditional_bavarian_folk_-music2.wav" id="6_xuyxq"]
 [ext_resource type="PackedScene" uid="uid://l5l5tasm2jqp" path="res://character/dummy.tscn" id="7_qctwu"]
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_qpgsj"]
+[sub_resource type="NavigationMesh" id="NavigationMesh_7ib18"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u2xmg"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_np37h"]
 margin = 0.001
 size = Vector3(200, 1, 200)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ewmbv"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_q2dlb"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tn3mj"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8gk12"]
 height = 1
-noise = SubResource("FastNoiseLite_ewmbv")
+noise = SubResource("FastNoiseLite_q2dlb")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_md13k"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nuvqt"]
 render_priority = 0
 shader = ExtResource("3_18b07")
-shader_parameter/noise = SubResource("NoiseTexture2D_tn3mj")
+shader_parameter/noise = SubResource("NoiseTexture2D_8gk12")
 
-[sub_resource type="BoxMesh" id="BoxMesh_3odfg"]
-material = SubResource("ShaderMaterial_md13k")
+[sub_resource type="BoxMesh" id="BoxMesh_fmrbt"]
+material = SubResource("ShaderMaterial_nuvqt")
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_aw5em"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_0rprg"]
 height = 23.744
 radial_segments = 5
 
@@ -52,7 +52,7 @@ shadow_reverse_cull_face = true
 directional_shadow_mode = 0
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
-navigation_mesh = SubResource("NavigationMesh_qpgsj")
+navigation_mesh = SubResource("NavigationMesh_7ib18")
 
 [node name="ground" type="StaticBody3D" parent="NavigationRegion3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
@@ -60,11 +60,11 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/ground"]
-shape = SubResource("BoxShape3D_u2xmg")
+shape = SubResource("BoxShape3D_np37h")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/ground"]
 transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, 0, 0, 0)
-mesh = SubResource("BoxMesh_3odfg")
+mesh = SubResource("BoxMesh_fmrbt")
 skeleton = NodePath("../../..")
 
 [node name="path" type="MeshInstance3D" parent="."]
@@ -95,7 +95,7 @@ omni_shadow_mode = 0
 
 [node name="lamppost" type="MeshInstance3D" parent="."]
 visible = false
-mesh = SubResource("CylinderMesh_aw5em")
+mesh = SubResource("CylinderMesh_0rprg")
 
 [node name="ambient_noise3" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_xuyxq")

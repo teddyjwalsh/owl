@@ -77,10 +77,10 @@ func get_age_coefficient():
 	return pow(1.0/abs(age - 20), 0.04)
 
 func get_movespeed():
-	return agility*get_age_coefficient()*(get_temperature_coefficient())*pow(energy, 0.2)/(get_equipment_size_coefficient())
+	return pow(agility*get_age_coefficient()*(get_temperature_coefficient())*pow(energy, 0.2)/(get_equipment_size_coefficient()),0.4)
 
 func get_melee_attack_damage_multiplier():
-	return temper*get_age_coefficient()*strength*(get_temperature_coefficient())*pow(energy, 0.2)
+	return pow(temper,0.1)*get_age_coefficient()*strength*(get_temperature_coefficient())*pow(energy, 0.2)
 
 func get_melee_attack_speed():
 	return get_age_coefficient()*pow(agility,2)*strength*(get_temperature_coefficient())*pow(energy, 0.01)/(get_equipment_size_coefficient())
@@ -95,13 +95,13 @@ func get_ranged_attack_speed():
 	return get_age_coefficient()*agility*dexterity*(get_temperature_coefficient())*pow(energy, 0.001)*get_anxiety_coefficient()
 	
 func get_ranged_attack_period(in_weapon):
-	return 3000*pow(get_size(),0.2)*pow(1.0/(get_ranged_attack_speed()*pow(in_weapon.base_attack_speed,2)), 0.8)
+	return 40*pow(get_size(),0.2)*pow(1.0/(get_ranged_attack_speed()*pow(in_weapon.base_attack_speed,2)), 0.2)
 	
 func get_melee_attack_period(in_weapon):
-	return 3000*pow(get_size(),0.5)*pow(1.0/(get_melee_attack_speed()*pow(in_weapon.base_attack_speed,2)), 0.8)
+	return 40*pow(get_size(),0.5)*pow(1.0/(get_melee_attack_speed()*pow(in_weapon.base_attack_speed,2)), 0.2)
 
 func get_movement_energy():
-	return get_age_coefficient()*get_size()*0.75
+	return pow(get_age_coefficient()*get_size()*0.75,0.7)*0.2
 	
 func get_size():
 	return pow(base_size*strength,0.8)
@@ -116,7 +116,7 @@ func get_teaching_coefficient():
 	return patience*intelligence*observation*friendliness/(get_age_coefficient()*temper)
 
 func get_max_health():
-	return pow(strength*stamina*100,0.8)
+	return pow(strength*stamina,0.8)*50
 	
 func get_after_movement_cooldown():
 	return 500.0/(get_age_coefficient()*100*stamina*dexterity*(get_anxiety_coefficient())*pow(energy, 0.2))
@@ -139,7 +139,8 @@ func add_energy(delta):
 	energy = max(min(energy, 1.0), 0)
 	
 func add_health(delta):
-	health += delta/get_max_health()
+	var mh = get_max_health()
+	health += delta/mh
 	health = max(min(health, 1.0), 0)
 	
 func sigmoid(x):

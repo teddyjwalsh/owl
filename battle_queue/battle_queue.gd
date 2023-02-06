@@ -4,10 +4,11 @@ var bqueue = []
 
 var current_scene = null
 var team = null
+var weather_server = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():	
-	pass # Replace with function body.
+	weather_server = get_node("/root/WeatherServer")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -21,6 +22,7 @@ func push(in_battle):
 
 func next():
 	if bqueue.size() > 0:
+		weather_server.shuffle()
 		if current_scene != null:
 			current_scene.queue_free()
 		current_scene = bqueue.pop_front().instantiate()
